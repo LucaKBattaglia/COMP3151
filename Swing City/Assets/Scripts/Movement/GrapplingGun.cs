@@ -13,7 +13,7 @@ public class GrapplingGun : MonoBehaviour
     [SerializeField] private float jointDamper = 7f;
     [SerializeField] private float jointMassScale = 4.5f;
     
-    [SerializeField] private LayerMask isGrappeable;
+    [SerializeField] private LayerMask canGrapple;
     [SerializeField] private Transform grappleTip;
     [SerializeField] private Transform camera;
     [SerializeField] private Transform player;
@@ -51,7 +51,7 @@ public class GrapplingGun : MonoBehaviour
 
     void StartGrapple() {
         RaycastHit hit;
-        if (Physics.Raycast(camera.position, camera.forward, out hit, maxGrappleDistance, isGrappeable)) {
+        if (Physics.Raycast(camera.position, camera.forward, out hit, maxGrappleDistance, canGrapple)) {
             grapplePoint = hit.point;
             joint = player.gameObject.AddComponent<SpringJoint>();
             joint.autoConfigureConnectedAnchor = false;
