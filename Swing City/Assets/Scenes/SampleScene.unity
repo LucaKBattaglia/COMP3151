@@ -642,7 +642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPosition: {fileID: 974762592}
-  cam: {fileID: 0}
+  cam: {fileID: 963194227}
 --- !u!4 &878906138
 Transform:
   m_ObjectHideFlags: 0
