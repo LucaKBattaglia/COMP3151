@@ -4,93 +4,129 @@ using UnityEngine;
 
 public class GrapplingGun : MonoBehaviour
 {
-    // SETTINGS
-    [SerializeField] private float maxGrappleDistance = 100f;
-    [SerializeField] private float maxGrappleSpeed = 8f;
-    [SerializeField] private float maxJointDistanceScale = 0.8f;
-    [SerializeField] private float minJointDistanceScale = 0.25f;
-    [SerializeField] private float jointSpring = 4.5f;
-    [SerializeField] private float jointDamper = 7f;
-    [SerializeField] private float jointMassScale = 4.5f;
+    [Header("References")]
+    [SerializeField] private LayerMask canGrapple; // What layer should it detect?
+    [SerializeField] private Transform grappleTip; // Where will the tip of the grappling gun be at?
+    [SerializeField] private Transform camera; // Connect to player camera
     
-    [SerializeField] private LayerMask canGrapple;
-    [SerializeField] private Transform grappleTip;
-    [SerializeField] private Transform camera;
-    [SerializeField] private Transform player;
-    
-    private LineRenderer lr;
+    [Header("Grapple Settings")]
+    private bool isGrappling;
+    [SerializeField] private float maxGrappleDistance = 100f; // Maximum distance of grappling
+    public float grappleDuration = 1f; // How long grappling should go until you can control again?
+    [SerializeField] private float grappleDelayTime; // How long grappling will reach?
+    [SerializeField] private float overshootYAxis; // How high you should jump higher than the point?
+    [SerializeField] private float grappleCooldown; // How long to wait until you can grapple again?
+    private float grappleCooldownTimer;
     private Vector3 grapplePoint;
-    private SpringJoint joint;
+
+    [Header("Input")]
+    [SerializeField] private KeyCode grappleKey = KeyCode.Mouse0; // Input key for grappling
+    
+    private PlayerMovement player;
+    private LineRenderer lr;
     private Vector3 currentGrapplePosition;
     
-    void Awake() {
+    void Awake()
+    {
         lr = GetComponent<LineRenderer>();
+        lr.enabled = false;
     }
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = GameObject.Find("Player").GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetKeyDown(grappleKey))
+        {
             StartGrapple();
         }
-        else if (Input.GetMouseButtonUp(0)) {
-            StopGrapple();
+        if (grappleCooldownTimer > 0f)
+        {
+            grappleCooldownTimer -= Time.deltaTime;
         }
     }
 
-    //Called after Update
-    void LateUpdate() {
-        DrawRope();
+    // Called after Update
+    void LateUpdate()
+    {
+        if (isGrappling)
+            DrawRope();
     }
 
-    void StartGrapple() {
+    private void StartGrapple()
+    {
+        // Prevent if cooldown is still in play
+        if (grappleCooldownTimer > 0f) return;
+
+        isGrappling = true;
+        player.isFrozen = true; // Freeze the player
+        grappleCooldownTimer = grappleCooldown; // Reset cooldown and stick it there until grappling has stopped
+
+        // Raycast to shoot grapple. If miss, set point at the maximum distance of ray
         RaycastHit hit;
-        if (Physics.Raycast(camera.position, camera.forward, out hit, maxGrappleDistance, canGrapple)) {
+        if (Physics.Raycast(camera.position, camera.forward, out hit, maxGrappleDistance, canGrapple))
+        {
             grapplePoint = hit.point;
-            joint = player.gameObject.AddComponent<SpringJoint>();
-            joint.autoConfigureConnectedAnchor = false;
-            joint.connectedAnchor = grapplePoint;
-
-            float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
-
-            joint.maxDistance = distanceFromPoint * maxJointDistanceScale;
-            joint.minDistance = distanceFromPoint * minJointDistanceScale;
-
-            joint.spring = jointSpring;
-            joint.damper = jointDamper;
-            joint.massScale = jointMassScale;
-
-            lr.positionCount = 2;
-            currentGrapplePosition = grappleTip.position;
+            
+            Invoke(nameof(ExecuteGrapple), grappleDelayTime); // execute grappling
         }
+        else
+        {
+            grapplePoint = camera.position + camera.forward * maxGrappleDistance;
+
+            Invoke(nameof(StopGrapple), grappleDelayTime); // stop grappling
+        }
+
+        lr.enabled = true;
+        currentGrapplePosition = grappleTip.position;
     }
 
-    void StopGrapple() {
-        lr.positionCount = 0;
-        Destroy(joint);
+    private void ExecuteGrapple()
+    {
+        player.isFrozen = false; // unfreeze player
+
+        Vector3 lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z); // set lowest point
+
+        float grapplePointRelativeYPos = grapplePoint.y - lowestPoint.y; // get relative y position for grapple point
+        float highestPointOnArc = grapplePointRelativeYPos + overshootYAxis; // get highest point on jumping arc
+
+        if (grapplePointRelativeYPos < 0) highestPointOnArc = overshootYAxis; // if the grappling point is lower than the player, set it to offset instead
+
+        player.JumpToPosition(grapplePoint, highestPointOnArc); // calculate jumping on player's side
+
+        Invoke(nameof(StopGrapple), grappleDuration); // stop grappling line after a set duration
     }
 
-    void DrawRope() {
-        //If not grappling, don't draw rope
-        if (!joint) return;
+    public void StopGrapple()
+    {
+        player.isFrozen = false; // unfreeze player
+        isGrappling = false;
+        lr.enabled = false;
+    }
 
-        currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime * maxGrappleSpeed);
+    void DrawRope()
+    {
+        currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime / grappleDelayTime); // draw grappling line to the point
         
+        // Set grapple starting and ending points
         lr.SetPosition(0, grappleTip.position);
         lr.SetPosition(1, currentGrapplePosition);
     }
 
-    public bool IsGrappling() {
-        return joint != null;
+    // Capture whether you're grappling or not
+    public bool IsGrappling()
+    {
+        return isGrappling;
     }
 
-    public Vector3 GetGrapplePoint() {
+    // Get the grappling ending point
+    public Vector3 GetGrapplePoint()
+    {
         return grapplePoint;
     }
 }

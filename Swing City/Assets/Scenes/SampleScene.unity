@@ -202,6 +202,8 @@ MonoBehaviour:
   sprintSpeed: 0
   orientation: {fileID: 1627898313}
   groundDrag: 5
+  isFrozen: 0
+  activeGrapple: 0
   jumpForce: 10
   jumpCooldown: 0.25
   airMultiplier: 0.4
@@ -967,19 +969,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f981da4bc0ada4f489c55c628e08637f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxGrappleDistance: 100
-  maxGrappleSpeed: 8
-  maxJointDistanceScale: 0.8
-  minJointDistanceScale: 0.25
-  jointSpring: 4.5
-  jointDamper: 7
-  jointMassScale: 4.5
   canGrapple:
     serializedVersion: 2
     m_Bits: 8
   grappleTip: {fileID: 257312856}
   camera: {fileID: 963194228}
-  player: {fileID: 186513737}
+  maxGrappleDistance: 100
+  grappleDuration: 1.5
+  grappleDelayTime: 0.5
+  overshootYAxis: 3
+  grappleCooldown: 2
+  grappleKey: 323
 --- !u!1 &1340902814
 GameObject:
   m_ObjectHideFlags: 0
