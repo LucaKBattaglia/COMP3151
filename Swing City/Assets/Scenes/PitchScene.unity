@@ -402,6 +402,7 @@ GameObject:
   m_Component:
   - component: {fileID: 186513737}
   - component: {fileID: 186513736}
+  - component: {fileID: 186513739}
   - component: {fileID: 186513738}
   m_Layer: 0
   m_Name: Player
@@ -446,7 +447,7 @@ Transform:
   m_GameObject: {fileID: 186513735}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 22.26, y: 1, z: 18.48}
+  m_LocalPosition: {x: 22.26, y: 1, z: 19.931}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -464,23 +465,58 @@ MonoBehaviour:
   m_GameObject: {fileID: 186513735}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1857d3f71e75d48348b57e2e19793bb2, type: 3}
+  m_Script: {fileID: 11500000, guid: bac8cf72cbdb3bc479a764c55b5892e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
-  walkSpeed: 0
-  sprintSpeed: 0
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 192
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
+  wallRunForce: 200
+  wallClimbSpeed: 1
+  maxWallRunTime: 1.5
+  wallRunTimer: 1
+  upwardsRunKey: 304
+  downwardsRunKey: 306
+  wallCheckDistance: 0.7
+  minJumpHeight: 2
   orientation: {fileID: 1627898313}
-  groundDrag: 5
-  jumpForce: 10
+--- !u!114 &186513739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186513735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ef1927499a3ef94eaac10a174d6e17f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 5
+  sprintSpeed: 8
+  wallrunSpeed: 6
+  groundDrag: 0
+  jumpForce: 12
   jumpCooldown: 0.25
   airMultiplier: 0.4
+  crouchSpeed: 3.5
+  crouchYScale: 0.5
   jumpKey: 32
+  sprintKey: 304
+  crouchKey: 306
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  text_speed: {fileID: 0}
+  maxSlopeAngle: 40
+  orientation: {fileID: 1627898313}
+  state: 0
+  sliding: 0
+  crouching: 0
+  wallrunning: 0
 --- !u!1 &249004025
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,7 +559,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 560399738}
+  m_Mesh: {fileID: 2036422688}
 --- !u!33 &249004027
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -3052,19 +3088,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f981da4bc0ada4f489c55c628e08637f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxGrappleDistance: 100
-  maxGrappleSpeed: 8
-  maxJointDistanceScale: 0.8
-  minJointDistanceScale: 0.25
-  jointSpring: 4.5
-  jointDamper: 7
-  jointMassScale: 4.5
   canGrapple:
     serializedVersion: 2
     m_Bits: 8
   grappleTip: {fileID: 257312856}
   camera: {fileID: 963194228}
-  player: {fileID: 186513737}
+  maxGrappleDistance: 100
+  grappleDuration: 1
+  grappleDelayTime: 0
+  overshootYAxis: 0
+  grappleCooldown: 0
+  grappleKey: 323
 --- !u!1 &1066596440
 GameObject:
   m_ObjectHideFlags: 0
@@ -3079,7 +3113,7 @@ GameObject:
   - component: {fileID: 1066596443}
   - component: {fileID: 1066596442}
   - component: {fileID: 1066596447}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3702,7 +3736,7 @@ GameObject:
   - component: {fileID: 1314205366}
   - component: {fileID: 1314205365}
   - component: {fileID: 1314205364}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Arch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4840,7 +4874,7 @@ GameObject:
   - component: {fileID: 1764023772}
   - component: {fileID: 1764023771}
   - component: {fileID: 1764023770}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5300,7 +5334,7 @@ GameObject:
   - component: {fileID: 2006362545}
   - component: {fileID: 2006362544}
   - component: {fileID: 2006362549}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

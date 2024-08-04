@@ -11,17 +11,33 @@ public class PlayerMovement : MonoBehaviour
 //------------------------------------------------------------------------------------------//
     [Header("Player")] // Player RigidBody/Body
     Rigidbody rb;
-//------------------------------------------------------------------------------------------//
+
+    public enum MovementState { 
+        walking,
+        sprinting,
+        wallrunning,
+        crouching,
+        sliding,
+        air
+    }
+    public MovementState state;
+
+    //------------------------------------------------------------------------------------------//
     [Header("Movement")] // Movement speeds & direction 
     public float moveSpeed;
     private float setMoveSpeed;
     Vector3 moveDirection;
-    [HideInInspector] public float walkSpeed;
-    [HideInInspector] public float sprintSpeed;
+    public float walkSpeed;
+    public float sprintSpeed;
     public Transform orientation;    
     public float groundDrag; // Drag | Air-Resistance when on ground | Friction
     public bool isFrozen;
     public bool activeGrapple;
+    public float wallrunSpeed;
+
+    public bool sliding;
+    public bool crouching;
+    public bool wallrunning;
 //------------------------------------------------------------------------------------------//
     [Header("Keybinds")] // Keybinds & player controls
     public float jumpForce;
@@ -38,7 +54,8 @@ public class PlayerMovement : MonoBehaviour
     public float playerHeight;
     public LayerMask whatIsGround;
     bool grounded;
-    [HideInInspector] public TextMeshProUGUI text_speed;
+    public TextMeshProUGUI text_speed;
+    public TextMeshProUGUI text_mode;
 //------------------------------------------------------------------------------------------//
 // End of Paramaters Section
 //------------------------------------------------------------------------------------------//
