@@ -11,14 +11,33 @@ public class PlayerMovement : MonoBehaviour
 //------------------------------------------------------------------------------------------//
     [Header("Player")] // Player RigidBody/Body
     Rigidbody rb;
-//------------------------------------------------------------------------------------------//
+
+    public enum MovementState { 
+        walking,
+        sprinting,
+        wallrunning,
+        crouching,
+        sliding,
+        air
+    }
+    public MovementState state;
+
+    //------------------------------------------------------------------------------------------//
     [Header("Movement")] // Movement speeds & direction 
     public float moveSpeed;
+    private float setMoveSpeed;
     Vector3 moveDirection;
-    [HideInInspector] public float walkSpeed;
-    [HideInInspector] public float sprintSpeed;
+    public float walkSpeed;
+    public float sprintSpeed;
     public Transform orientation;    
     public float groundDrag; // Drag | Air-Resistance when on ground | Friction
+    public bool isFrozen;
+    public bool activeGrapple;
+    public float wallrunSpeed;
+
+    public bool sliding;
+    public bool crouching;
+    public bool wallrunning;
 //------------------------------------------------------------------------------------------//
     [Header("Keybinds")] // Keybinds & player controls
     public float jumpForce;
@@ -35,7 +54,8 @@ public class PlayerMovement : MonoBehaviour
     public float playerHeight;
     public LayerMask whatIsGround;
     bool grounded;
-    [HideInInspector] public TextMeshProUGUI text_speed;
+    public TextMeshProUGUI text_speed;
+    public TextMeshProUGUI text_mode;
 //------------------------------------------------------------------------------------------//
 // End of Paramaters Section
 //------------------------------------------------------------------------------------------//
@@ -53,6 +73,8 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
 
         readyToJump = true;
+
+        setMoveSpeed = moveSpeed;
     }
 
     private void Update()
@@ -99,11 +121,23 @@ public class PlayerMovement : MonoBehaviour
     //--------------------------------------------------------------------------------------//
     private void MovePlayer()
     {
+        if (activeGrapple) return;
+
         // calculate player movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
+        // reset player movement speed
+        moveSpeed = setMoveSpeed;
+
+        // if player is frozen, stop them in place
+        if (isFrozen)
+        {
+            moveSpeed = 0;
+            rb.velocity = Vector3.zero;
+        }
+        
         // when player is on ground
-        if(grounded)
+        else if(grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
 
         // when player is in air
@@ -112,6 +146,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private void SpeedControl()
     {
+        if (activeGrapple) return;
+        
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         // limit velocity if needed
@@ -138,6 +174,62 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJump()
     {
         readyToJump = true;
+    }
+
+    //--------------------------------------------------------------------------------------//
+    // Grappling Section
+    //--------------------------------------------------------------------------------------//
+    // variable for movement detection
+    private bool enableMovementOnNextTouch;
+    public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight)
+    {
+        activeGrapple = true;
+
+        // use jumping velocity when player pulls the grapple to the point
+        velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
+        Invoke(nameof(SetVelocity), 0.1f);
+
+        // restore player controls after set duration
+        Invoke(nameof(ResetRestrictions), GameObject.Find("grappleGun").GetComponent<GrapplingGun>().grappleDuration);
+    }
+
+    // set velocity to rigidbody
+    private Vector3 velocityToSet;
+    private void SetVelocity()
+    {
+        enableMovementOnNextTouch = true;
+        rb.velocity = velocityToSet;
+    }
+
+    public void ResetRestrictions()
+    {
+        activeGrapple = false;
+    }
+
+    // reset player controls when colliding
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (enableMovementOnNextTouch)
+        {
+            enableMovementOnNextTouch = false;
+            ResetRestrictions();
+
+            GameObject.Find("grappleGun").GetComponent<GrapplingGun>().StopGrapple();
+        }
+    }
+
+    // main math method for calculating jump velocity
+    public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
+    {
+        float gravity = Physics.gravity.y;
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity) 
+            + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
+
+        return velocityXZ + velocityY;
     }
 }
 //------------------------------------------------------------------------------------------//
