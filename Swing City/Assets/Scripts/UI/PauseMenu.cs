@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public static bool paused = false;
-    public GameObject PauseMenuCanvas;
+    public GameObject DisplayPauseMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +32,7 @@ public class PauseMenu : MonoBehaviour
 
     void Stop()
     {
-        PauseMenuCanvas.SetActive(true);
+        DisplayPauseMenu.SetActive(true);
         Time.timeScale = 0f;
         paused = true;
         Cursor.lockState = CursorLockMode.None; 
@@ -40,15 +40,15 @@ public class PauseMenu : MonoBehaviour
 
     public void Play()
     {
-        PauseMenuCanvas.SetActive(false);
+        DisplayPauseMenu.SetActive(false);
         Time.timeScale = 1f;
         paused = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void MainMenuButton()
-    {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    {   //Only works if their is 1 level in-front on main menu
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1); 
         SceneManager.LoadScene("MainMenu");
     }
 }
