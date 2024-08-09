@@ -15,6 +15,7 @@ public class GrapplingGun : MonoBehaviour
     public float grappleDuration = 1f; // How long grappling should go until you can control again?
     [SerializeField] private float grappleDelayTime; // How long grappling will reach?
     [SerializeField] private float overshootYAxis; // How high you should jump higher than the point?
+    [Range(0.1f, 5f)] [SerializeField] private float overshootXZScale = 1f; // How far you should jump farther than the point? (Scaled)
     [SerializeField] private float grappleCooldown; // How long to wait until you can grapple again?
     private float grappleCooldownTimer;
     private Vector3 grapplePoint;
@@ -97,7 +98,7 @@ public class GrapplingGun : MonoBehaviour
 
         if (grapplePointRelativeYPos < 0) highestPointOnArc = overshootYAxis; // if the grappling point is lower than the player, set it to offset instead
 
-        player.JumpToPosition(grapplePoint, highestPointOnArc); // calculate jumping on player's side
+        player.JumpToPosition(grapplePoint, highestPointOnArc, overshootXZScale); // calculate jumping on player's side
 
         Invoke(nameof(StopGrapple), grappleDuration); // stop grappling line after a set duration
     }

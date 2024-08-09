@@ -247,9 +247,13 @@ public class PlayerMovement : MonoBehaviour
     //--------------------------------------------------------------------------------------//
     // variable for movement detection
     private bool enableMovementOnNextTouch;
-    public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight)
+
+    // variable for grapple jump scaling
+    private float velocityXZScale;
+    public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight, float velocityXZScale)
     {
         activeGrapple = true;
+        this.velocityXZScale = velocityXZScale;
 
         // use jumping velocity when player pulls the grapple to the point
         velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
@@ -264,6 +268,7 @@ public class PlayerMovement : MonoBehaviour
     private void SetVelocity()
     {
         enableMovementOnNextTouch = true;
+        velocityToSet = new Vector3(velocityToSet.x * velocityXZScale, velocityToSet.y, velocityToSet.z * velocityXZScale);
         rb.velocity = velocityToSet;
     }
 
