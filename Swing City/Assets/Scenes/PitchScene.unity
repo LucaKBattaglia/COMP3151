@@ -3182,9 +3182,17 @@ MonoBehaviour:
   grappleDuration: 1
   grappleDelayTime: 0
   overshootYAxis: 0
-  overshootXZScale: 2
+  overshootXZScale: 3
   grappleCooldown: 0
-  grappleKey: 323
+  maxSwingDistance: 50
+  swingDelayTime: 0
+  minJointDistanceScale: 0.25
+  maxJointDistanceScale: 0.8
+  jointSpring: 6
+  jointDamper: 4
+  jointMassScale: 4.5
+  grappleKey: 324
+  swingKey: 323
 --- !u!1 &1066596440
 GameObject:
   m_ObjectHideFlags: 0
