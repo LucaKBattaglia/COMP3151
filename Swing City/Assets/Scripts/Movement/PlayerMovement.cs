@@ -8,10 +8,23 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public bool isFrozen;
     private float moveSpeed;
+    // public float SwingMovement
+    // {
+    //     get
+    //     {
+    //         return moveSpeed;
+    //     }
+    //     set
+    //     {
+    //         
+    //     }
+    // }
     public float walkSpeed;
     public float sprintSpeed;
     public float wallrunSpeed;
+    public float swingMultiplier;
     public bool activeGrapple;
+    public bool activeSwing;
     public float groundDrag;
 
     [Header("Jumping")]
@@ -74,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
         readyToJump = true;
 
         startYScale = transform.localScale.y;
+        activeSwing = false;
     }
 
     private void Update()
@@ -90,15 +104,16 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = groundDrag;
         else
             rb.drag = 0;
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            respawn(curCheckpoint.transform.position);
+        }
     }
 
     private void FixedUpdate()
     {
         MovePlayer();
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            respawn(curCheckpoint.transform.position);
-        }
     }
 
     private void MyInput()
@@ -158,6 +173,11 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.walking;
             moveSpeed = walkSpeed;
+        }
+
+        else if (activeSwing)
+        {
+            moveSpeed = walkSpeed * swingMultiplier;
         }
 
         // Mode - Air
@@ -257,9 +277,13 @@ public class PlayerMovement : MonoBehaviour
     //--------------------------------------------------------------------------------------//
     // variable for movement detection
     private bool enableMovementOnNextTouch;
-    public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight)
+
+    // variable for grapple jump scaling
+    private float velocityXZScale;
+    public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight, float velocityXZScale)
     {
         activeGrapple = true;
+        this.velocityXZScale = velocityXZScale;
 
         // use jumping velocity when player pulls the grapple to the point
         velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
@@ -274,6 +298,7 @@ public class PlayerMovement : MonoBehaviour
     private void SetVelocity()
     {
         enableMovementOnNextTouch = true;
+        velocityToSet = new Vector3(velocityToSet.x * velocityXZScale, velocityToSet.y, velocityToSet.z * velocityXZScale);
         rb.velocity = velocityToSet;
     }
 

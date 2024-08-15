@@ -8,17 +8,16 @@ public class PlayerCam : MonoBehaviour
     public float sensX;
     public float sensY;
 
+    public Transform player;
     public Transform orientation;
-    public Transform camHolder;
+    public Transform camPos;
 
-    float xRotation;
-    float yRotation;
+    float xRotation, yRotation, zRotation;
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
     }
 
     private void Update()
@@ -27,13 +26,14 @@ public class PlayerCam : MonoBehaviour
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
 
-        yRotation += mouseX;
-
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        yRotation += mouseX;
 
         // rotate cam and orientation
-        camHolder.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation);
+        player.Rotate(Vector3.up * mouseX);
+        transform.position = camPos.position;
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 
@@ -44,33 +44,21 @@ public class PlayerCam : MonoBehaviour
 
     public void DoTilt(float zTilt)
     {
-        Vector3 tempAng = transform.rotation.eulerAngles;
-        tempAng += new Vector3(0, 0, zTilt);
-        Quaternion newAng = Quaternion.Euler(tempAng);
-        StartCoroutine(rotateCam(transform.rotation, newAng, 0.2f));
+        StartCoroutine(rotateCam(zRotation, zTilt, 0.4f));
     }
 
-    public void resetTilt() {
-        Vector3 tempAng = transform.rotation.eulerAngles;
-        int diff = 360 - (int)tempAng.z;
-        tempAng += new Vector3(0,0,diff);
-        Quaternion newAng = Quaternion.Euler(tempAng);
-        transform.rotation = newAng;
-        //StartCoroutine(rotateCam(transform.rotation, newAng, 0.2f));
-    }
-
-    IEnumerator rotateCam(Quaternion start, Quaternion end, float duration) {
+    IEnumerator rotateCam(float start, float end, float duration) {
         if (duration > 0f) { 
             float startTime = Time.time;   
             float endTime = startTime + duration;
-            transform.rotation = start;
+            zRotation = start;
             yield return null;
             while (Time.time < endTime) {
                 float progress = (Time.time - startTime) / duration;
-                transform.rotation = Quaternion.Slerp(start, end, progress);
+                zRotation = Mathf.Lerp(start, end, progress);
                 yield return null;
             }
         }
-        transform.rotation = end;
+        zRotation = end;
     }
 }
