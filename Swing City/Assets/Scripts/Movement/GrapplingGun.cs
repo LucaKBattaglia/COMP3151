@@ -34,6 +34,10 @@ public class GrapplingGun : MonoBehaviour
     [Header("Input")]
     [SerializeField] private KeyCode grappleKey = KeyCode.Mouse1; // Input key for grappling
     [SerializeField] private KeyCode swingKey = KeyCode.Mouse0; // Input key for swinging
+
+    [Header("Colours")]
+    [SerializeField] private Color grappleColour = Color.red;
+    [SerializeField] private Color swingColour = Color.blue;
     
     private PlayerMovement player;
     private LineRenderer lr;
@@ -158,23 +162,26 @@ public class GrapplingGun : MonoBehaviour
 
     private void ExecuteSwing()
     {
-        // Set up joint at the grapple point
-        joint = player.gameObject.AddComponent<SpringJoint>();
-        joint.autoConfigureConnectedAnchor = false;
-        joint.connectedAnchor = grapplePoint;
+        if (isSwinging) // In case the input cancels swinging early before it reaches the point, prevent execution when it happens
+        {
+            // Set up joint at the grapple point
+            joint = player.gameObject.AddComponent<SpringJoint>();
+            joint.autoConfigureConnectedAnchor = false;
+            joint.connectedAnchor = grapplePoint;
 
-        float distanceFromPoint = Vector3.Distance(player.transform.position, grapplePoint);
+            float distanceFromPoint = Vector3.Distance(player.transform.position, grapplePoint);
 
-        // Keeping the distance of the swing away and towards the grapple point
-        joint.maxDistance = distanceFromPoint * maxJointDistanceScale;
-        joint.minDistance = distanceFromPoint * minJointDistanceScale;
+            // Keeping the distance of the swing away and towards the grapple point
+            joint.maxDistance = distanceFromPoint * maxJointDistanceScale;
+            joint.minDistance = distanceFromPoint * minJointDistanceScale;
 
-        // Settings used to set the joint's behaviour
-        joint.spring = jointSpring;
-        joint.damper = jointDamper;
-        joint.massScale = jointMassScale;
+            // Settings used to set the joint's behaviour
+            joint.spring = jointSpring;
+            joint.damper = jointDamper;
+            joint.massScale = jointMassScale;
 
-        player.activeSwing = true;
+            player.activeSwing = true;   
+        }
     }
 
     private void StopSwing()
@@ -187,6 +194,17 @@ public class GrapplingGun : MonoBehaviour
 
     void DrawRope()
     {
+        if (isGrappling)
+        {
+            lr.startColor = grappleColour;
+            lr.endColor = grappleColour;
+        }
+        else if (isSwinging)
+        {
+            lr.startColor = swingColour;
+            lr.endColor = swingColour;
+        }
+
         currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime / grappleDelayTime); // draw grappling line to the point
         
         // Set grapple starting and ending points
