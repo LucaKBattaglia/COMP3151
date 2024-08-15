@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: bc9d43cc101a44bacbce3e1e2e1fa136
   - enabled: 1
-    path: Assets/Scenes/FinishLine.unity
+    path: Assets/Scenes/PrototypeScene.unity
     guid: cab848e950bf0b64e86acd95cee5994b
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
