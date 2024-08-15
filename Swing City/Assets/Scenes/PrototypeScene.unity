@@ -239,9 +239,9 @@ GameObject:
   - component: {fileID: 118868444}
   - component: {fileID: 118868443}
   - component: {fileID: 118868442}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: playerObject
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1011,8 +1011,17 @@ MonoBehaviour:
   grappleDuration: 1
   grappleDelayTime: 0
   overshootYAxis: 0
+  overshootXZScale: 1
   grappleCooldown: 0
-  grappleKey: 323
+  maxSwingDistance: 50
+  swingDelayTime: 0
+  minJointDistanceScale: 0.25
+  maxJointDistanceScale: 0.8
+  jointSpring: 4.5
+  jointDamper: 7
+  jointMassScale: 4.5
+  grappleKey: 324
+  swingKey: 323
 --- !u!120 &441730675
 LineRenderer:
   serializedVersion: 2
@@ -2179,9 +2188,9 @@ GameObject:
   - component: {fileID: 501286018}
   - component: {fileID: 501286017}
   - component: {fileID: 501286016}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2218,7 +2227,7 @@ MonoBehaviour:
   useGravity: 1
   gravityCounterForce: 10
   orientation: {fileID: 921046025}
-  cam: {fileID: 584363126}
+  cam: {fileID: 0}
 --- !u!114 &501286017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2253,7 +2262,9 @@ MonoBehaviour:
   walkSpeed: 5
   sprintSpeed: 8
   wallrunSpeed: 6
+  swingMultiplier: 3
   activeGrapple: 0
+  activeSwing: 0
   groundDrag: 0
   jumpForce: 8
   jumpCooldown: 0.25
@@ -2269,6 +2280,7 @@ MonoBehaviour:
     m_Bits: 8
   maxSlopeAngle: 40
   orientation: {fileID: 921046025}
+  curCheckpoint: {fileID: 0}
   state: 0
   sliding: 0
   crouching: 0
@@ -4277,7 +4289,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 921046025}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: playerOrientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4308,7 +4320,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 943770792}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cameraPosition
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
