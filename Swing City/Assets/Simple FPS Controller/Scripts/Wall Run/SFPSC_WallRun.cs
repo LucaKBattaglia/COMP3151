@@ -25,7 +25,7 @@ public class SFPSC_WallRun : MonoBehaviour
     public float maxDistanceToWall = 1.5f; // The maximum distance to attach the player to a wall
     public float constantWallRunForce = 15.0f; // This force is going to be applied on the player constantly while wall running
     public float jumpForce = 600.0f; // The jump force that is applied when you jump while wall running
-    public float cameraTiltAngle = 10.0f; // The angle that the camera tilts when wall running
+    public float cameraTiltAngle = 5.0f; // The angle that the camera tilts when wall running
     public float minSpeedWhenAttached = 10.0f;
     public float t1 = 5.0f, multiplier = 4.5f;
     public float jumpWallMultiplier = 0.5f, jumpForwardMultiplier = 0.3f, jumpUpMultiplier = 0.2f;

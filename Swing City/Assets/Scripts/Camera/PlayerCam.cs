@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class PlayerCam : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
     }
 
     private void Update()
@@ -43,6 +45,27 @@ public class PlayerCam : MonoBehaviour
 
     public void DoTilt(float zTilt)
     {
-        //transform.DOLocalRotate(new Vector3(0, 0, zTilt), 0.25f);
+        print(zTilt);
+        Vector3 tempAng = transform.rotation.eulerAngles;
+        print(tempAng);
+        tempAng += new Vector3(0, 0, zTilt);
+        Quaternion newAng = Quaternion.Euler(tempAng);
+        print(newAng);
+        StartCoroutine(rotateCam(transform.rotation, newAng, 0.2f));
+    }
+
+    IEnumerator rotateCam(Quaternion start, Quaternion end, float duration) {
+        if (duration > 0f) { 
+            float startTime = Time.time;   
+            float endTime = startTime + duration;
+            transform.rotation = start;
+            yield return null;
+            while (Time.time < endTime) {
+                float progress = (Time.time - startTime) / duration;
+                transform.rotation = Quaternion.Slerp(start, end, progress);
+                yield return null;
+            }
+        }
+        transform.rotation = end;
     }
 }
