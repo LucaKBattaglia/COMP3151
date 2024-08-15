@@ -106,12 +106,15 @@ public class SFPSC_GrapplingHook : MonoBehaviour
                 location = new GameObject().transform;//Instantiate(new GameObject(), hitInfo.point, Quaternion.identity).transform;
                 location.position = hitInfo.point;
                 location.parent = hitInfo.collider.transform;
-
                 if (decelerateTimer != 0.0f)
                     StopCoroutine(Decelerate());
                 pm.DisableMovement();
                 // Rope attaching
                 rope.segments = (int)((hitInfo.distance / maxGrappleDistance) * segments);
+
+                if(pm.IsGrounded) {
+                    rb.AddForce(new Vector3(0,250,0), ForceMode.Impulse);
+                }
                 rope.Grapple(transform.position, hitInfo.point);
 
                 rb.useGravity = false;

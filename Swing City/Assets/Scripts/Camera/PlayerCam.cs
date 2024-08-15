@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using DG.Tweening;
 
 public class PlayerCam : MonoBehaviour
 {
@@ -45,13 +44,19 @@ public class PlayerCam : MonoBehaviour
 
     public void DoTilt(float zTilt)
     {
-        print(zTilt);
         Vector3 tempAng = transform.rotation.eulerAngles;
-        print(tempAng);
         tempAng += new Vector3(0, 0, zTilt);
         Quaternion newAng = Quaternion.Euler(tempAng);
-        print(newAng);
         StartCoroutine(rotateCam(transform.rotation, newAng, 0.2f));
+    }
+
+    public void resetTilt() {
+        Vector3 tempAng = transform.rotation.eulerAngles;
+        int diff = 360 - (int)tempAng.z;
+        tempAng += new Vector3(0,0,diff);
+        Quaternion newAng = Quaternion.Euler(tempAng);
+        transform.rotation = newAng;
+        //StartCoroutine(rotateCam(transform.rotation, newAng, 0.2f));
     }
 
     IEnumerator rotateCam(Quaternion start, Quaternion end, float duration) {

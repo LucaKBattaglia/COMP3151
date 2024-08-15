@@ -90,8 +90,9 @@ public class SFPSC_WallRun : MonoBehaviour
 
     private void StopWallRunning()
     {
+        print("I ran");
         wallRunning = false;
-        SFPSC_FPSCamera.cam.rotZ = 0.0f; // Resetting the z rotation on the camera (if the player shoots and the camera shakes it won't be such a problem)
+        SFPSC_FPSCamera.cam.DoTilt(0.0f); // Resetting the z rotation on the camera (if the player shoots and the camera shakes it won't be such a problem)
         blocked = true;
         Invoke(nameof(UnblockWallRunning), attachToWallBlockTime);
     }
@@ -103,14 +104,15 @@ public class SFPSC_WallRun : MonoBehaviour
     
     private Vector3 gravityForce;
     private bool isJumpAvailable = true;
-    private void AddForces(Vector3 wallNormal, 
-        bool right) // if right is false it means that the wall is on the left side
+    
+    private void AddForces(Vector3 wallNormal, bool right) // if right is false it means that the wall is on the left side
     {
         if (isJumpAvailable && Input.GetKey(SFPSC_KeyManager.Jump))
         {
-            rb.AddForce((hitInfo.normal * jumpWallMultiplier + transform.forward * jumpForwardMultiplier + Vector3.up * jumpUpMultiplier).normalized * rb.mass * jumpForce);
+            rb.AddForce(((hitInfo.normal * jumpWallMultiplier) + (transform.forward * jumpForwardMultiplier) + (Vector3.up * jumpUpMultiplier)).normalized * rb.mass * jumpForce);
             isJumpAvailable = false;
             Invoke(nameof(UnblockJump), jumpBlockTime);
+            wallRunning = false;
         }
 
         if (t >= 0.0f)
@@ -125,7 +127,7 @@ public class SFPSC_WallRun : MonoBehaviour
 
         // if the player somehow calls Shake(...) method on the FPSCamera script it is going to set the rotZ to 0 and there
         // is no way to inform the player that he is on a wall so we constantly set the rotZ to the angle
-        SFPSC_FPSCamera.cam.rotZ = right ? cameraTiltAngle : -cameraTiltAngle;
+        SFPSC_FPSCamera.cam.DoTilt(right ? cameraTiltAngle : -cameraTiltAngle);
     }
 
     private static Vector3 ClampSqrMag(Vector3 vec, float sqrMag)

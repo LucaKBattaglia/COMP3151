@@ -2350,14 +2350,14 @@ Transform:
   m_GameObject: {fileID: 696694760}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.36, y: 1.9, z: -18.97}
+  m_LocalPosition: {x: 24.07, y: 1.9, z: 20.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1750389143}
-  - {fileID: 1737495278}
   - {fileID: 317836141}
   - {fileID: 1868028333}
+  - {fileID: 1737495278}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &696694762
@@ -2376,18 +2376,18 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 192
-  maxDistanceToWall: 1.5
-  constantWallRunForce: 15
-  jumpForce: 600
-  cameraTiltAngle: 10
-  minSpeedWhenAttached: 10
-  t1: 5
+  maxDistanceToWall: 1
+  constantWallRunForce: 10
+  jumpForce: 400
+  cameraTiltAngle: 7.5
+  minSpeedWhenAttached: 8
+  t1: 4
   multiplier: 4.5
-  jumpWallMultiplier: 0.6
-  jumpForwardMultiplier: 0.1
-  jumpUpMultiplier: 0.3
+  jumpWallMultiplier: 2
+  jumpForwardMultiplier: 0.5
+  jumpUpMultiplier: 10
   jumpBlockTime: 0.6
-  attachToWallBlockTime: 1
+  attachToWallBlockTime: 0.5
 --- !u!114 &696694763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3300,6 +3300,8 @@ MonoBehaviour:
   maxDownAngle: -80
   player: {fileID: 696694761}
   CameraPosition: {fileID: 1750389143}
+  rotX: 0
+  rotY: 0
   rotZ: 0
 --- !u!81 &870895506
 AudioListener:
@@ -3369,7 +3371,7 @@ Transform:
   m_GameObject: {fileID: 870895504}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.36, y: 0.47000003, z: -20.41}
+  m_LocalPosition: {x: 4.3600006, y: 0.47000003, z: -20.409998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6091,7 +6093,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1737495277}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
