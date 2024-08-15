@@ -470,15 +470,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFrozen: 0
-  walkSpeed: 5
+  walkSpeed: 4
   sprintSpeed: 8
   wallrunSpeed: 6
+  swingMultiplier: 3
   activeGrapple: 0
+  activeSwing: 0
   groundDrag: 0
   jumpForce: 8
   jumpCooldown: 0.25
   airMultiplier: 0.2
-  crouchSpeed: 3.5
+  crouchSpeed: 2.5
   crouchYScale: 0.5
   jumpKey: 32
   sprintKey: 304
@@ -3187,8 +3189,8 @@ MonoBehaviour:
   maxSwingDistance: 50
   swingDelayTime: 0
   minJointDistanceScale: 0.25
-  maxJointDistanceScale: 0.8
-  jointSpring: 6
+  maxJointDistanceScale: 0.6
+  jointSpring: 8
   jointDamper: 4
   jointMassScale: 4.5
   grappleKey: 324

@@ -173,6 +173,8 @@ public class GrapplingGun : MonoBehaviour
         joint.spring = jointSpring;
         joint.damper = jointDamper;
         joint.massScale = jointMassScale;
+
+        player.activeSwing = true;
     }
 
     private void StopSwing()
@@ -180,6 +182,7 @@ public class GrapplingGun : MonoBehaviour
         isSwinging = false;
         lr.enabled = false;
         if (joint) Destroy(joint); // Destroy the joint if it exists
+        player.activeSwing = false;
     }
 
     void DrawRope()

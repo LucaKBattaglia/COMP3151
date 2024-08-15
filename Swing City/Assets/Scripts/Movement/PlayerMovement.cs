@@ -8,10 +8,23 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public bool isFrozen;
     private float moveSpeed;
+    // public float SwingMovement
+    // {
+    //     get
+    //     {
+    //         return moveSpeed;
+    //     }
+    //     set
+    //     {
+    //         
+    //     }
+    // }
     public float walkSpeed;
     public float sprintSpeed;
     public float wallrunSpeed;
+    public float swingMultiplier;
     public bool activeGrapple;
+    public bool activeSwing;
     public float groundDrag;
 
     [Header("Jumping")]
@@ -72,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
         readyToJump = true;
 
         startYScale = transform.localScale.y;
+        activeSwing = false;
     }
 
     private void Update()
@@ -152,6 +166,11 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.walking;
             moveSpeed = walkSpeed;
+        }
+
+        else if (activeSwing)
+        {
+            moveSpeed = walkSpeed * swingMultiplier;
         }
 
         // Mode - Air
