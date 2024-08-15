@@ -50,9 +50,8 @@ public class SFPSC_FPSCamera : MonoBehaviour
         Cursor.visible = false;
     }
     
-    private float rotX = 0.0f, rotY = 0.0f;
-    [HideInInspector]
-    public float rotZ = 0.0f;
+    public float rotX = 0.0f, rotY = 0.0f, rotZ = 0.0f;
+
     private void Update()
     {
         // Mouse input
@@ -68,6 +67,27 @@ public class SFPSC_FPSCamera : MonoBehaviour
         transform.localRotation = Quaternion.Euler(rotX, rotY, rotZ);
         player.Rotate(Vector3.up * mouseX);
         transform.position = CameraPosition.position;
+    }
+
+
+    public void DoTilt(float zTilt)
+    {
+        StartCoroutine(rotateCam(rotZ, zTilt, 0.4f));
+    }
+
+    IEnumerator rotateCam(float start, float end, float duration) {
+        if (duration > 0f) { 
+            float startTime = Time.time;   
+            float endTime = startTime + duration;
+            rotZ = start;
+            yield return null;
+            while (Time.time < endTime) {
+                float progress = (Time.time - startTime) / duration;
+                rotZ = Mathf.Lerp(start, end, progress);
+                yield return null;
+            }
+        }
+        rotZ = end;
     }
 
     public void Shake(float magnitude, float duration)

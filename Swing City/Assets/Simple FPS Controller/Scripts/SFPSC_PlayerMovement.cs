@@ -45,6 +45,7 @@ public class SFPSC_PlayerMovement : MonoBehaviour
 
     private SFPSC_WallRun wallRun;
     private SFPSC_GrapplingHook grapplingHook;
+    public GameObject curCheckpoint;
 
     private void Start()
     {
@@ -109,6 +110,19 @@ public class SFPSC_PlayerMovement : MonoBehaviour
         else
             // Air control
             rb.velocity = ClampSqrMag(rb.velocity + inputForce * Time.fixedDeltaTime, rb.velocity.sqrMagnitude);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            respawn(curCheckpoint.transform.position);
+        }
+    }
+
+    public void respawn(Vector3 checkpoint)
+    {
+        transform.position = checkpoint;
     }
 
     private static Vector3 ClampSqrMag(Vector3 vec, float sqrMag)

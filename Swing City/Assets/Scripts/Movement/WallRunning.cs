@@ -42,7 +42,7 @@ public class WallRunning : MonoBehaviour
 
     [Header("References")]
     public Transform orientation;
-    public PlayerCam cam;
+    public SFPSC_FPSCamera cam;
     private PlayerMovement pm;
     private Rigidbody rb;
 
@@ -127,6 +127,7 @@ public class WallRunning : MonoBehaviour
 
     private void StartWallRun()
     {
+        print("I am called");
         pm.wallrunning = true;
 
         wallRunTimer = maxWallRunTime;
@@ -134,7 +135,7 @@ public class WallRunning : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         // apply camera effects
-        cam.DoFov(90f);
+        //cam.DoFov(90f);
         if (wallLeft) cam.DoTilt(-5f);
         if (wallRight) cam.DoTilt(5f);
     }
@@ -173,8 +174,8 @@ public class WallRunning : MonoBehaviour
         pm.wallrunning = false;
 
         // reset camera effects
-        cam.DoFov(80f);
-        cam.DoTilt(0f);
+        //cam.DoFov(80f);
+        cam.DoTilt(0);
     }
 
     private void WallJump()

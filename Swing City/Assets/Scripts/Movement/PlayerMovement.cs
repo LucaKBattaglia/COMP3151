@@ -43,6 +43,8 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform orientation;
 
+    public GameObject curCheckpoint;
+
     float horizontalInput;
     float verticalInput;
 
@@ -93,6 +95,10 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            respawn(curCheckpoint.transform.position);
+        }
     }
 
     private void MyInput()
@@ -240,6 +246,10 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 GetSlopeMoveDirection(Vector3 dir)
     {
         return Vector3.ProjectOnPlane(dir, slopeHit.normal).normalized;
+    }
+
+    public void respawn(Vector3 checkpoint) { 
+        transform.position = checkpoint;
     }
 
     //--------------------------------------------------------------------------------------//
