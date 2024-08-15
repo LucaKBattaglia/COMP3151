@@ -3196,6 +3196,8 @@ MonoBehaviour:
   jointMassScale: 4.5
   grappleKey: 324
   swingKey: 323
+  grappleColour: {r: 0.39215687, g: 0, b: 0, a: 1}
+  swingColour: {r: 0, g: 0, b: 0.39215687, a: 1}
 --- !u!1 &1066596440
 GameObject:
   m_ObjectHideFlags: 0
