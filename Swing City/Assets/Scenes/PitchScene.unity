@@ -491,6 +491,7 @@ MonoBehaviour:
     m_Bits: 8
   maxSlopeAngle: 40
   orientation: {fileID: 1627898313}
+  curCheckpoint: {fileID: 0}
   state: 0
   sliding: 0
   crouching: 0
@@ -545,7 +546,7 @@ MonoBehaviour:
   useGravity: 1
   gravityCounterForce: 10
   orientation: {fileID: 1627898313}
-  cam: {fileID: 963194229}
+  cam: {fileID: 0}
 --- !u!1 &249004025
 GameObject:
   m_ObjectHideFlags: 0
@@ -3182,12 +3183,12 @@ MonoBehaviour:
   camera: {fileID: 963194228}
   maxGrappleDistance: 100
   grappleDuration: 1
-  grappleDelayTime: 0
+  grappleDelayTime: 0.2
   overshootYAxis: 0
   overshootXZScale: 3
   grappleCooldown: 0
   maxSwingDistance: 50
-  swingDelayTime: 0
+  swingDelayTime: 0.2
   minJointDistanceScale: 0.25
   maxJointDistanceScale: 0.6
   jointSpring: 8
