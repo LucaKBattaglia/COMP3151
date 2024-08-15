@@ -470,15 +470,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFrozen: 0
-  walkSpeed: 5
+  walkSpeed: 4
   sprintSpeed: 8
   wallrunSpeed: 6
+  swingMultiplier: 3
   activeGrapple: 0
+  activeSwing: 0
   groundDrag: 0
   jumpForce: 8
   jumpCooldown: 0.25
   airMultiplier: 0.2
-  crouchSpeed: 3.5
+  crouchSpeed: 2.5
   crouchYScale: 0.5
   jumpKey: 32
   sprintKey: 304
@@ -489,6 +491,7 @@ MonoBehaviour:
     m_Bits: 8
   maxSlopeAngle: 40
   orientation: {fileID: 1627898313}
+  curCheckpoint: {fileID: 0}
   state: 0
   sliding: 0
   crouching: 0
@@ -543,7 +546,7 @@ MonoBehaviour:
   useGravity: 1
   gravityCounterForce: 10
   orientation: {fileID: 1627898313}
-  cam: {fileID: 963194229}
+  cam: {fileID: 0}
 --- !u!1 &249004025
 GameObject:
   m_ObjectHideFlags: 0
@@ -3180,10 +3183,19 @@ MonoBehaviour:
   camera: {fileID: 963194228}
   maxGrappleDistance: 100
   grappleDuration: 1
-  grappleDelayTime: 0
+  grappleDelayTime: 0.2
   overshootYAxis: 0
+  overshootXZScale: 3
   grappleCooldown: 0
-  grappleKey: 323
+  maxSwingDistance: 50
+  swingDelayTime: 0.2
+  minJointDistanceScale: 0.25
+  maxJointDistanceScale: 0.6
+  jointSpring: 8
+  jointDamper: 4
+  jointMassScale: 4.5
+  grappleKey: 324
+  swingKey: 323
 --- !u!1 &1066596440
 GameObject:
   m_ObjectHideFlags: 0
