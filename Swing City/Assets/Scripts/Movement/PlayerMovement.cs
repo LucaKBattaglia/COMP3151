@@ -8,17 +8,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public bool isFrozen;
     private float moveSpeed;
-    // public float SwingMovement
-    // {
-    //     get
-    //     {
-    //         return moveSpeed;
-    //     }
-    //     set
-    //     {
-    //         
-    //     }
-    // }
     public float walkSpeed;
     public float sprintSpeed;
     public float wallrunSpeed;
@@ -52,6 +41,9 @@ public class PlayerMovement : MonoBehaviour
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
     private bool exitingSlope;
+
+    [Header("Momentum")]
+    public float swingDecceleration = 2f;
     
 
     public Transform orientation;
@@ -183,6 +175,14 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             state = MovementState.air;
+            if (moveSpeed > walkSpeed)
+            {
+                moveSpeed -= Time.deltaTime * swingDecceleration;
+            }
+            else
+            {
+                moveSpeed = walkSpeed;
+            }
         }
     }
 
