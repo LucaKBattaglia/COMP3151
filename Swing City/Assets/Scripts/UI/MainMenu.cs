@@ -5,9 +5,13 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     // Start is called before the first frame update
+
+    private void Update(){
+        Cursor.lockState = CursorLockMode.None; 
+    }
     public void PlayGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("FinishLine");
     }
 
     public void QuitGame()
