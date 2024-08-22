@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: bc9d43cc101a44bacbce3e1e2e1fa136
   - enabled: 1
-    path: Assets/Scenes/PrototypeScene.unity
+    path: Assets/Scenes/FinishLine.unity
     guid: cab848e950bf0b64e86acd95cee5994b
   - enabled: 1
     path: Assets/Scenes/Hub.unity
@@ -17,4 +17,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level1.unity
+    guid: 6c9e7864701cc42b5a95e7b81b9e5ffb
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level2.unity
+    guid: 633c33177e8524036a28b825b848b327
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level3.unity
+    guid: 6e0cfbaa3bac0465faa399f294de8a57
+  - enabled: 1
+    path: Assets/Scenes/PitchScene.unity
+    guid: 2b0d21bd5e1f73b4bb27ddb9b85c4b23
+  - enabled: 1
+    path: Assets/Scenes/PitchScene2.unity
+    guid: 97fc260db311c194d9e3a6eecee70045
+  - enabled: 1
+    path: Assets/Scenes/PrototypeScene.unity
+    guid: bfa35df53ecc940c59da548d9d305119
   m_configObjects: {}

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class FinishLine : MonoBehaviour
 {
-    public string keyNumber;  // For example, "1" so the key becomes "Key1"
+public string keyNumber;  // For example, "1" so the key becomes "Key1"
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.CompareTag("Player"))
@@ -13,6 +13,8 @@ public class FinishLine : MonoBehaviour
             // Player collects the key
             GameManager.instance.CollectKey("Key" + keyNumber);
             SceneManager.LoadScene("Hub");
+            Debug.Log("U have got key 1");
         }
     }
+
 }
