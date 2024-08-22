@@ -3186,7 +3186,7 @@ MonoBehaviour:
   grappleDelayTime: 0.2
   overshootYAxis: 0
   overshootXZScale: 3
-  grappleCooldown: 0
+  grappleCooldown: 1.5
   maxSwingDistance: 50
   swingDelayTime: 0.2
   minJointDistanceScale: 0.25
@@ -3194,6 +3194,7 @@ MonoBehaviour:
   jointSpring: 8
   jointDamper: 4
   jointMassScale: 4.5
+  swingCooldown: 1
   grappleKey: 324
   swingKey: 323
   grappleColour: {r: 0.39215687, g: 0, b: 0, a: 1}
