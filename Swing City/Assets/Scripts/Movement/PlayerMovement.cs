@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public bool activeGrapple;
     public bool activeSwing;
     public float groundDrag;
+    private float horizontalSpeed;
 
     [Header("Jumping")]
     public float jumpForce;
@@ -105,6 +106,8 @@ public class PlayerMovement : MonoBehaviour
         {
             respawn(curCheckpoint.transform.position);
         }
+        horizontalSpeed = Mathf.Sqrt(Mathf.Pow(rb.velocity.x, 2) + Mathf.Pow(rb.velocity.z, 2));
+        Debug.Log(horizontalSpeed);
     }
 
     private void MyInput()
