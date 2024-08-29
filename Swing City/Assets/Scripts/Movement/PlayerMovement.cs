@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public bool activeGrapple;
     public bool activeSwing;
     public float groundDrag;
+    private float horizontalSpeed;
 
     [Header("Jumping")]
     public float jumpForce;
@@ -70,7 +71,6 @@ public class PlayerMovement : MonoBehaviour
     public bool sliding;
     public bool crouching;
     public bool wallrunning;
-    public bool canMove = true;
 
     private void Start()
     {
@@ -87,21 +87,11 @@ public class PlayerMovement : MonoBehaviour
     {
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-        if(canMove){
-            MyInput(); 
-            SpeedControl();
-            StateHandler(); 
-            
-        }
-        if (!canMove){
-        return; // Prevent any movement if canMove is false
-    }
-        MovePlayer();
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            respawn(curCheckpoint.transform.position);
-        }
-   
+
+        MyInput();
+        SpeedControl();
+        StateHandler();
+
         // handle drag
         if (grounded)
             rb.drag = groundDrag;
@@ -109,6 +99,16 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = 0;
     }
 
+    private void FixedUpdate()
+    {
+        MovePlayer();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            respawn(curCheckpoint.transform.position);
+        }
+        horizontalSpeed = Mathf.Sqrt(Mathf.Pow(rb.velocity.x, 2) + Mathf.Pow(rb.velocity.z, 2));
+        Debug.Log(horizontalSpeed);
+    }
 
     private void MyInput()
     {
