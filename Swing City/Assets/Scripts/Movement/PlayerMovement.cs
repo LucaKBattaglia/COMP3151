@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class PlayerMovement : MonoBehaviour
@@ -21,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     // }
     public float walkSpeed;
     public float sprintSpeed;
+    private float boostSpeed;
     public float maxSpeed;
     public float wallrunSpeed;
     public float swingMultiplier;
@@ -81,6 +83,8 @@ public class PlayerMovement : MonoBehaviour
     public bool sliding;
     public bool crouching;
     public bool wallrunning;
+
+    public fade fadeImg;
 
     private void Start()
     {
@@ -149,6 +153,10 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
         }
+
+        if(Input.GetKeyUp(KeyCode.W) && grounded) {
+            boosting = false;
+        }
     }
 
     private void StateHandler()
@@ -165,6 +173,10 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.crouching;
             moveSpeed = crouchSpeed;
+        }
+
+        else if (boosting) {
+            moveSpeed = boostSpeed;
         }
 
         // Mode - Sprinting
@@ -222,34 +234,23 @@ public class PlayerMovement : MonoBehaviour
 
     private void SpeedControl()
     {
+        //print(moveSpeed);
         // limiting speed on slope
         if (OnSlope() && !exitingSlope)
         {
-            if (rb.velocity.magnitude > moveSpeed)
+            if (rb.velocity.magnitude > moveSpeed) {
                 rb.velocity = rb.velocity.normalized * moveSpeed;
+            }
         }
-
         // limiting speed on ground or in air
         else
         {
             Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             // limit velocity if needed
-            if(controlSpd) {
-                if (flatVel.magnitude > moveSpeed)
-                {
-                    Vector3 limitedVel = flatVel.normalized * moveSpeed;
-                    rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
-                }
-            }
-            else {
-                if (flatVel.magnitude > maxSpeed)
-                {
-                    Vector3 limitedVel = flatVel.normalized * maxSpeed;
-                    rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
-                }
-                if(moveSpeed < sprintSpeed) {
-                    controlSpd = true;
-                }
+            if (flatVel.magnitude > moveSpeed)
+            {
+                Vector3 limitedVel = flatVel.normalized * moveSpeed;
+                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
             }
         }
     }
@@ -287,8 +288,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void respawn(Vector3 checkpoint) { 
+        fadeImg.fadeIn();
         controlSpd = true;
         transform.position = checkpoint;
+        fadeImg.fadeOut();
     }
 
     public void boost(Vector3 dir, int spd, Vector3 pos) {
@@ -300,7 +303,13 @@ public class PlayerMovement : MonoBehaviour
     public IEnumerator boostTime() {
         controlSpd = false;
         boosting = true;
-        yield return new WaitForSeconds(1);
+        boostSpeed = maxSpeed;
+        yield return null;
+        while(moveSpeed > walkSpeed) {
+            print(moveSpeed);
+            boostSpeed-=2;
+            yield return new WaitForSeconds(1);
+        }
         boosting = false;
     }
 
