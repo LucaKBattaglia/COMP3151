@@ -76,6 +76,9 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        gameObject.tag = "Player";
+        transform.Find("playerObject").tag = "Player";
+
 
         readyToJump = true;
 
