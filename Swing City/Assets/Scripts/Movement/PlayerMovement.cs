@@ -21,11 +21,14 @@ public class PlayerMovement : MonoBehaviour
     // }
     public float walkSpeed;
     public float sprintSpeed;
+    public float maxSpeed;
     public float wallrunSpeed;
     public float swingMultiplier;
     public bool activeGrapple;
     public bool activeSwing;
+    public bool controlSpd;
     public float groundDrag;
+    public bool boosting;
 
     [Header("Jumping")]
     public float jumpForce;
@@ -88,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
 
         startYScale = transform.localScale.y;
         activeSwing = false;
+        controlSpd = true;
     }
 
     private void Update()
@@ -95,13 +99,15 @@ public class PlayerMovement : MonoBehaviour
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
-        MyInput();
-        SpeedControl();
+        GetInput();
         StateHandler();
-
+        SpeedControl();
+        
         // handle drag
-        if (grounded)
+        if (grounded) {
+            
             rb.drag = groundDrag;
+        }
         else
             rb.drag = 0;
 
@@ -116,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
     }
 
-    private void MyInput()
+    private void GetInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
@@ -202,8 +208,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // on ground
-        else if(grounded)
+        else if(grounded) {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        }
 
         // in air
         else if(!grounded)
@@ -226,12 +233,23 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
             // limit velocity if needed
-            if (flatVel.magnitude > moveSpeed)
-            {
-                Vector3 limitedVel = flatVel.normalized * moveSpeed;
-                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            if(controlSpd) {
+                if (flatVel.magnitude > moveSpeed)
+                {
+                    Vector3 limitedVel = flatVel.normalized * moveSpeed;
+                    rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+                }
+            }
+            else {
+                if (flatVel.magnitude > maxSpeed)
+                {
+                    Vector3 limitedVel = flatVel.normalized * maxSpeed;
+                    rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+                }
+                if(moveSpeed < sprintSpeed) {
+                    controlSpd = true;
+                }
             }
         }
     }
@@ -269,7 +287,21 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void respawn(Vector3 checkpoint) { 
+        controlSpd = true;
         transform.position = checkpoint;
+    }
+
+    public void boost(Vector3 dir, int spd, Vector3 pos) {
+        transform.position += pos;
+        rb.AddForce(dir * spd, ForceMode.Impulse);
+        StartCoroutine(boostTime());
+    }
+
+    public IEnumerator boostTime() {
+        controlSpd = false;
+        boosting = true;
+        yield return new WaitForSeconds(1);
+        boosting = false;
     }
 
     //--------------------------------------------------------------------------------------//
