@@ -14,7 +14,7 @@ public class GrapplingGun : MonoBehaviour
     public float grappleDuration = 1f; // How long grappling should go until you can control again?
     [SerializeField] private float grappleDelayTime; // How long grappling will reach?
     [SerializeField] private float overshootYAxis; // How high you should jump higher than the point?
-    [Range(0.1f, 10f)] [SerializeField] private float overshootXZScale = 1f; // How far you should jump farther than the point? (Scaled)
+    [SerializeField] private float overshootXZScale = 1f; // How far you should jump farther than the point? (Scaled)
     [SerializeField] private float grappleCooldown; // How long to wait until you can grapple again?
     private bool isGrappling;
     private float grappleCooldownTimer;
@@ -28,12 +28,18 @@ public class GrapplingGun : MonoBehaviour
     [SerializeField] private float jointSpring = 4.5f; // Spring of joint
     [SerializeField] private float jointDamper = 7f; // Damper of joint
     [SerializeField] private float jointMassScale = 4.5f; // Mass scale of joint
+    [SerializeField] private float swingCooldown; // How long to wait until you can swing again?
     private bool isSwinging;
+    private float swingCooldownTimer;
     private SpringJoint joint;
 
     [Header("Input")]
     [SerializeField] private KeyCode grappleKey = KeyCode.Mouse1; // Input key for grappling
     [SerializeField] private KeyCode swingKey = KeyCode.Mouse0; // Input key for swinging
+
+    [Header("Colours")]
+    [SerializeField] private Color grappleColour = Color.red;
+    [SerializeField] private Color swingColour = Color.blue;
     
     private PlayerMovement player;
     private LineRenderer lr;
@@ -69,6 +75,10 @@ public class GrapplingGun : MonoBehaviour
         if (Input.GetKeyUp(swingKey))
         {
             StopSwing();
+        }
+        if (swingCooldownTimer > 0f)
+        {
+            swingCooldownTimer -= Time.deltaTime;
         }
     }
 
@@ -132,10 +142,11 @@ public class GrapplingGun : MonoBehaviour
 
     private void StartSwing()
     {
-        // Prevent if grappling is still in play
-        if (isGrappling) return;
+        // Prevent if cooldown or grappling is still in play
+        if (swingCooldownTimer > 0f || isGrappling) return;
         
         isSwinging = true;
+        swingCooldownTimer = swingCooldown; // Reset cooldown and stick it there until swinging has stopped
         
         // Raycast to shoot grapple. If miss, set point at the maximum distance of ray
         RaycastHit hit;
@@ -143,13 +154,13 @@ public class GrapplingGun : MonoBehaviour
         {
             grapplePoint = hit.point;
             
-            Invoke(nameof(ExecuteSwing), grappleDelayTime); // execute swinging
+            Invoke(nameof(ExecuteSwing), swingDelayTime); // execute swinging
         }
         else
         {
             grapplePoint = camera.position + camera.forward * maxGrappleDistance;
 
-            Invoke(nameof(StopSwing), grappleDelayTime); // stop swinging
+            Invoke(nameof(StopSwing), swingDelayTime); // stop swinging
         }
 
         lr.enabled = true;
@@ -158,23 +169,28 @@ public class GrapplingGun : MonoBehaviour
 
     private void ExecuteSwing()
     {
-        // Set up joint at the grapple point
-        joint = player.gameObject.AddComponent<SpringJoint>();
-        joint.autoConfigureConnectedAnchor = false;
-        joint.connectedAnchor = grapplePoint;
+        if (isSwinging) // In case the input cancels swinging early before it reaches the point, prevent execution when it happens
+        {
+            swingCooldownTimer = swingCooldown; // Reset cooldown and stick it there until swinging has stopped
+            
+            // Set up joint at the grapple point
+            joint = player.gameObject.AddComponent<SpringJoint>();
+            joint.autoConfigureConnectedAnchor = false;
+            joint.connectedAnchor = grapplePoint;
 
-        float distanceFromPoint = Vector3.Distance(player.transform.position, grapplePoint);
+            float distanceFromPoint = Vector3.Distance(player.transform.position, grapplePoint);
 
-        // Keeping the distance of the swing away and towards the grapple point
-        joint.maxDistance = distanceFromPoint * maxJointDistanceScale;
-        joint.minDistance = distanceFromPoint * minJointDistanceScale;
+            // Keeping the distance of the swing away and towards the grapple point
+            joint.maxDistance = distanceFromPoint * maxJointDistanceScale;
+            joint.minDistance = distanceFromPoint * minJointDistanceScale;
 
-        // Settings used to set the joint's behaviour
-        joint.spring = jointSpring;
-        joint.damper = jointDamper;
-        joint.massScale = jointMassScale;
+            // Settings used to set the joint's behaviour
+            joint.spring = jointSpring;
+            joint.damper = jointDamper;
+            joint.massScale = jointMassScale;
 
-        player.activeSwing = true;
+            player.activeSwing = true;   
+        }
     }
 
     private void StopSwing()
@@ -187,6 +203,17 @@ public class GrapplingGun : MonoBehaviour
 
     void DrawRope()
     {
+        if (isGrappling)
+        {
+            lr.startColor = grappleColour;
+            lr.endColor = grappleColour;
+        }
+        else if (isSwinging)
+        {
+            lr.startColor = swingColour;
+            lr.endColor = swingColour;
+        }
+
         currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime / grappleDelayTime); // draw grappling line to the point
         
         // Set grapple starting and ending points
