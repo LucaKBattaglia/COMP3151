@@ -26,7 +26,7 @@ public class JumpPad : MonoBehaviour
     // If the player is on the pad, multiply the jumping force
     void OnTriggerStay(Collider collider)
     {
-        if (collider.tag == "Player")
+        if (collider.CompareTag("Player"))
         {
             player.jumpForce = playerJumpForce * jumpBoostMultiplier;
         }
@@ -35,7 +35,7 @@ public class JumpPad : MonoBehaviour
     // If the player leaves the pad, set the jump force back to normal
     void OnTriggerExit(Collider collider)
     {
-        if (collider.tag == "Player")
+        if (collider.CompareTag("Player"))
         {
             player.jumpForce = playerJumpForce;
         }
