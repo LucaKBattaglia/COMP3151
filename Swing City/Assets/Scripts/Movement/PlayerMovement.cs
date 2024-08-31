@@ -304,10 +304,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void respawn(Vector3 checkpoint) { 
-        fadeImg.fadeIn();
+        //fadeImg.fadeIn();
         controlSpd = true;
         transform.position = checkpoint;
-        fadeImg.fadeOut();
+        //fadeImg.fadeOut();
     }
 
     public void boost(Vector3 dir, int spd, Vector3 pos) {
