@@ -472,11 +472,14 @@ MonoBehaviour:
   isFrozen: 0
   walkSpeed: 4
   sprintSpeed: 8
+  maxSpeed: 0
   wallrunSpeed: 6
   swingMultiplier: 3
   activeGrapple: 0
   activeSwing: 0
+  controlSpd: 0
   groundDrag: 0.1
+  boosting: 0
   jumpForce: 8
   jumpCooldown: 0.25
   airMultiplier: 0.2
@@ -497,6 +500,8 @@ MonoBehaviour:
   sliding: 0
   crouching: 0
   wallrunning: 0
+  canMove: 1
+  fadeImg: {fileID: 0}
 --- !u!114 &186513740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2712,7 +2717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPosition: {fileID: 974762592}
-  cam: {fileID: 0}
+  cam: {fileID: 963194227}
 --- !u!4 &878906138
 Transform:
   m_ObjectHideFlags: 0
@@ -2837,8 +2842,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensX: 1011
   sensY: 1011
+  player: {fileID: 186513737}
   orientation: {fileID: 1627898313}
-  camHolder: {fileID: 878906138}
+  camPos: {fileID: 974762592}
 --- !u!1 &974762591
 GameObject:
   m_ObjectHideFlags: 0

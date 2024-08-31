@@ -7157,8 +7157,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensX: 1011
   sensY: 1011
+  player: {fileID: 2021106162}
   orientation: {fileID: 1565327871}
-  camHolder: {fileID: 1850972377}
+  camPos: {fileID: 1247816060}
 --- !u!81 &1061110062
 AudioListener:
   m_ObjectHideFlags: 0
@@ -11387,6 +11388,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
+--- !u!4 &2021106162 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4757837077297399718, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
+  m_PrefabInstance: {fileID: 2021106161}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &2021840921
 Mesh:
   m_ObjectHideFlags: 0

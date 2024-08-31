@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class PlayerMovement : MonoBehaviour
@@ -8,13 +9,28 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public bool isFrozen;
     private float moveSpeed;
+    // public float SwingMovement
+    // {
+    //     get
+    //     {
+    //         return moveSpeed;
+    //     }
+    //     set
+    //     {
+    //         
+    //     }
+    // }
     public float walkSpeed;
     public float sprintSpeed;
+    private float boostSpeed;
+    public float maxSpeed;
     public float wallrunSpeed;
     public float swingMultiplier;
     public bool activeGrapple;
     public bool activeSwing;
+    public bool controlSpd;
     public float groundDrag;
+    public bool boosting;
 
     [Header("Jumping")]
     public float jumpForce;
@@ -72,6 +88,8 @@ public class PlayerMovement : MonoBehaviour
     public bool wallrunning;
     public bool canMove = true;
 
+    public fade fadeImg;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -84,6 +102,7 @@ public class PlayerMovement : MonoBehaviour
 
         startYScale = transform.localScale.y;
         activeSwing = false;
+        controlSpd = true;
     }
 
     private void Update()
@@ -91,29 +110,31 @@ public class PlayerMovement : MonoBehaviour
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         if(canMove){
-            MyInput(); 
+            GetInput(); 
             SpeedControl();
             StateHandler(); 
-            
         }
-        if (!canMove){
-        return; // Prevent any movement if canMove is false
-    }
+        else {
+            return; // Prevent any movement if canMove is false
+        }
         MovePlayer();
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             respawn(curCheckpoint.transform.position);
         }
    
         // handle drag
-        if (grounded)
+        if (grounded) {
+            
             rb.drag = groundDrag;
+        }
         else
             rb.drag = 0;
     }
 
 
-    private void MyInput()
+    private void GetInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
@@ -140,6 +161,10 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
         }
+
+        if(Input.GetKeyUp(KeyCode.W) && grounded) {
+            boosting = false;
+        }
     }
 
     private void StateHandler()
@@ -156,6 +181,10 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.crouching;
             moveSpeed = crouchSpeed;
+        }
+
+        else if (boosting) {
+            moveSpeed = boostSpeed;
         }
 
         // Mode - Sprinting
@@ -207,8 +236,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // on ground
-        else if(grounded)
+        else if(grounded) {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        }
 
         // in air
         else if(!grounded)
@@ -220,18 +250,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void SpeedControl()
     {
+        //print(moveSpeed);
         // limiting speed on slope
         if (OnSlope() && !exitingSlope)
         {
-            if (rb.velocity.magnitude > moveSpeed)
+            if (rb.velocity.magnitude > moveSpeed) {
                 rb.velocity = rb.velocity.normalized * moveSpeed;
+            }
         }
-
         // limiting speed on ground or in air
         else
         {
             Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
             // limit velocity if needed
             if (flatVel.magnitude > moveSpeed)
             {
@@ -274,7 +304,29 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void respawn(Vector3 checkpoint) { 
+        //fadeImg.fadeIn();
+        controlSpd = true;
         transform.position = checkpoint;
+        //fadeImg.fadeOut();
+    }
+
+    public void boost(Vector3 dir, int spd, Vector3 pos) {
+        transform.position += pos;
+        rb.AddForce(dir * spd, ForceMode.Impulse);
+        StartCoroutine(boostTime());
+    }
+
+    public IEnumerator boostTime() {
+        controlSpd = false;
+        boosting = true;
+        boostSpeed = maxSpeed;
+        yield return null;
+        while(moveSpeed > walkSpeed) {
+            print(moveSpeed);
+            boostSpeed-=2;
+            yield return new WaitForSeconds(1);
+        }
+        boosting = false;
     }
 
     //--------------------------------------------------------------------------------------//

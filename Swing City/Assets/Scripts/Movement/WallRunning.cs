@@ -42,7 +42,7 @@ public class WallRunning : MonoBehaviour
 
     [Header("References")]
     public Transform orientation;
-    public SFPSC_FPSCamera cam;
+    public PlayerCam cam;
     private PlayerMovement pm;
     private Rigidbody rb;
 
