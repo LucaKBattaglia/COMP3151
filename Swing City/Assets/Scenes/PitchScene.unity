@@ -96,8 +96,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: b1649c3ffe6e9e64386aa70d6df43fd7, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 2ef688cbfa037c44f8305a8a12984ce7, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 186513739}
   - component: {fileID: 186513740}
   - component: {fileID: 186513741}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2209,7 +2209,7 @@ GameObject:
   - component: {fileID: 727682679}
   - component: {fileID: 727682678}
   - component: {fileID: 727682677}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: playerObject
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2854,7 +2854,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 974762592}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cameraPosition
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -4782,7 +4782,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1627898313}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: playerOrientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
