@@ -5936,9 +5936,9 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 877258378}
-    - target: {fileID: 1881368510826993212, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
-      propertyPath: m_Layer
-      value: 9
+    - target: {fileID: 3621946920988657023, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4757837077297399718, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5980,25 +5980,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5457073879317127231, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 5772688829905072132, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5772688829905072132, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 5772688829905072132, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8397702944270478285, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
-      propertyPath: m_Layer
-      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

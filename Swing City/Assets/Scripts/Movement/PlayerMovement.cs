@@ -55,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Slope Handling")]
     public float maxSlopeAngle;
+    public float minSlopeAngle;
     private RaycastHit slopeHit;
     private bool exitingSlope;
 
@@ -229,20 +230,20 @@ public class PlayerMovement : MonoBehaviour
         // on slope
         if (OnSlope() && !exitingSlope)
         {
-            rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 20f, ForceMode.Force);
+            rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 2f, ForceMode.Force);
 
             if (rb.velocity.y > 0)
-                rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+                rb.AddForce(Vector3.down * moveSpeed, ForceMode.Force);
         }
 
         // on ground
         else if(grounded) {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * moveSpeed * 5f, ForceMode.Force);
         }
 
         // in air
         else if(!grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * moveSpeed * airMultiplier, ForceMode.Force);
 
         // turn gravity off while on slope
         rb.useGravity = !OnSlope();
@@ -289,10 +290,10 @@ public class PlayerMovement : MonoBehaviour
 
     public bool OnSlope()
     {
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.5f))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
-            return angle < maxSlopeAngle && angle != 0;
+            return angle < maxSlopeAngle && angle >= minSlopeAngle;
         }
 
         return false;

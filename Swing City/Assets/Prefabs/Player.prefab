@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4008136819870357609}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: cameraPosition
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -42,10 +42,10 @@ GameObject:
   - component: {fileID: 3153245809772258800}
   - component: {fileID: 7819195607672478221}
   - component: {fileID: 1136015455774920036}
-  - component: {fileID: 3621946920988657023}
-  m_Layer: 0
+  - component: {fileID: 7675187664074428119}
+  m_Layer: 9
   m_Name: playerObject
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,7 +60,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4757837077297399718}
@@ -72,7 +72,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5457073879317127231}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1136015455774920036
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -115,8 +115,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3621946920988657023
-BoxCollider:
+--- !u!136 &7675187664074428119
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -133,8 +133,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  serializedVersion: 2
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5772688829905072132
 GameObject:
@@ -149,9 +151,9 @@ GameObject:
   - component: {fileID: 8014506165160761107}
   - component: {fileID: 7733762480554805686}
   - component: {fileID: 1179476444491626436}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -216,11 +218,14 @@ MonoBehaviour:
   isFrozen: 0
   walkSpeed: 4
   sprintSpeed: 8
+  maxSpeed: 0
   wallrunSpeed: 6
   swingMultiplier: 3
   activeGrapple: 0
   activeSwing: 0
+  controlSpd: 0
   groundDrag: 0
+  boosting: 0
   jumpForce: 8
   jumpCooldown: 0.25
   airMultiplier: 0.2
@@ -234,6 +239,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   maxSlopeAngle: 40
+  minSlopeAngle: 5
   swingDecceleration: 2
   orientation: {fileID: 1584755760412390282}
   curCheckpoint: {fileID: 0}
@@ -241,6 +247,8 @@ MonoBehaviour:
   sliding: 0
   crouching: 0
   wallrunning: 0
+  canMove: 1
+  fadeImg: {fileID: 0}
 --- !u!114 &7733762480554805686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,9 +309,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1584755760412390282}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: playerOrientation
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
