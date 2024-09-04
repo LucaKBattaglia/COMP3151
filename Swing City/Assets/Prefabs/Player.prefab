@@ -216,17 +216,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFrozen: 0
-  walkSpeed: 4
-  sprintSpeed: 8
-  maxSpeed: 0
-  wallrunSpeed: 6
-  swingMultiplier: 3
+  walkSpeed: 8
+  sprintSpeed: 12
+  maxSpeed: 20
+  wallrunSpeed: 8
+  swingMultiplier: 2
   activeGrapple: 0
   activeSwing: 0
   controlSpd: 0
-  groundDrag: 0
+  groundDrag: 5
   boosting: 0
-  jumpForce: 8
+  jumpForce: 9
   jumpCooldown: 0.25
   airMultiplier: 0.2
   crouchSpeed: 2.5
