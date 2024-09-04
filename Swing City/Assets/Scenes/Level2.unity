@@ -345,6 +345,11 @@ MonoBehaviour:
   tmp: {fileID: 0}
   curTime: 0
   active: 0
+--- !u!4 &219786111 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4820790603268994597, guid: 109290471fa0bec40906807ad83f2c1f, type: 3}
+  m_PrefabInstance: {fileID: 1811469991}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &343878965
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11294,6 +11299,7 @@ Transform:
   - {fileID: 1201137097}
   - {fileID: 1510901594}
   - {fileID: 441492275}
+  - {fileID: 219786111}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1510901593
@@ -11663,7 +11669,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1486317070}
     m_Modifications:
     - target: {fileID: 4820790603268994597, guid: 109290471fa0bec40906807ad83f2c1f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11671,7 +11677,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4820790603268994597, guid: 109290471fa0bec40906807ad83f2c1f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.93
+      value: 5.9300003
       objectReference: {fileID: 0}
     - target: {fileID: 4820790603268994597, guid: 109290471fa0bec40906807ad83f2c1f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11683,15 +11689,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4820790603268994597, guid: 109290471fa0bec40906807ad83f2c1f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4820790603268994597, guid: 109290471fa0bec40906807ad83f2c1f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4820790603268994597, guid: 109290471fa0bec40906807ad83f2c1f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4820790603268994597, guid: 109290471fa0bec40906807ad83f2c1f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12162,7 +12168,6 @@ SceneRoots:
   - {fileID: 343878965}
   - {fileID: 755367467}
   - {fileID: 1131992668}
-  - {fileID: 1811469991}
   - {fileID: 47629367}
   - {fileID: 666986172}
   - {fileID: 1261921328}
