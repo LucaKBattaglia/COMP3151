@@ -4,18 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public string scene;
 
-    private void Update(){
+    private void Update() {
+        Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None; 
     }
-    public void PlayGame()
-    {
-        SceneManager.LoadScene("PrototypeScene");
+    public void PlayGame() {
+        SceneManager.LoadScene(scene);
     }
 
-    public void QuitGame()
-    {
+    public void QuitGame() {
         Application.Quit();
         Debug.Log("Application is quitting, game can only be quit when built");
     }
