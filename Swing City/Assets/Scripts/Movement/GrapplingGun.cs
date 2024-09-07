@@ -7,7 +7,7 @@ public class GrapplingGun : MonoBehaviour
     [Header("References")]
     [SerializeField] private LayerMask canGrapple; // What layer should it detect?
     [SerializeField] private Transform grappleTip; // Where will the tip of the grappling gun be at?
-    [SerializeField] private Transform camera; // Connect to player camera
+    [SerializeField] private Transform cam; // Connect to player camera
     
     [Header("Grapple Settings")]
     [SerializeField] private float maxGrappleDistance = 100f; // Maximum distance of grappling
@@ -21,7 +21,7 @@ public class GrapplingGun : MonoBehaviour
     private Vector3 grapplePoint;
 
     [Header("Swing Settings")]
-    [SerializeField] private float maxSwingDistance = 50f; // Maximum distance of swinging
+    //[SerializeField] private float maxSwingDistance = 50f; // Maximum distance of swinging
     [SerializeField] private float swingDelayTime; // How long swinging will reach?
     [SerializeField] private float minJointDistanceScale = 0.25f; // Minimum distance of joint (Scaled by point to distance)
     [SerializeField] private float maxJointDistanceScale = 0.8f; // Maximum distance of joint (Scaled by point to distance)
@@ -100,7 +100,7 @@ public class GrapplingGun : MonoBehaviour
 
         // Raycast to shoot grapple. If miss, set point at the maximum distance of ray
         RaycastHit hit;
-        if (Physics.Raycast(camera.position, camera.forward, out hit, maxGrappleDistance, canGrapple))
+        if (Physics.Raycast(cam.position, cam.forward, out hit, maxGrappleDistance, canGrapple))
         {
             grapplePoint = hit.point;
             
@@ -108,7 +108,7 @@ public class GrapplingGun : MonoBehaviour
         }
         else
         {
-            grapplePoint = camera.position + camera.forward * maxGrappleDistance;
+            grapplePoint = cam.position + cam.forward * maxGrappleDistance;
 
             Invoke(nameof(StopGrapple), grappleDelayTime); // stop grappling
         }
@@ -150,7 +150,7 @@ public class GrapplingGun : MonoBehaviour
         
         // Raycast to shoot grapple. If miss, set point at the maximum distance of ray
         RaycastHit hit;
-        if (Physics.Raycast(camera.position, camera.forward, out hit, maxGrappleDistance, canGrapple))
+        if (Physics.Raycast(cam.position, cam.forward, out hit, maxGrappleDistance, canGrapple))
         {
             grapplePoint = hit.point;
             
@@ -158,7 +158,7 @@ public class GrapplingGun : MonoBehaviour
         }
         else
         {
-            grapplePoint = camera.position + camera.forward * maxGrappleDistance;
+            grapplePoint = cam.position + cam.forward * maxGrappleDistance;
 
             Invoke(nameof(StopSwing), swingDelayTime); // stop swinging
         }
