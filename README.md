@@ -1,17 +1,21 @@
 ># COMP3151 - Progress Report 1
 > Dylan Wijesinghe - 47292105 <br> Gian-Luca Battaglia - 47416084 <br> Zion Xiaoxi Su - 46340661 <br> William Dixon - 47391146
 >
+> ## Current Progress
+> We have made significant progress throughout the development process. At this point, we have developed all the core mechanics for the game.
+>
 > ## Movement
 >
-> Movement in Swing City has been fully implemented with basic controls such as walking (WASD), sprinting (Hold Shift + WASD), and jumping (Space). Since we also wanted the movement to be smooth rather than sudden, we gave the player a slightly slippery effect when walking and stopping. Jumping also has air drag, meaning the longer the player stays in the air, the more the horizontal velocity decreases over time.
+> Movement in Swing City has been fully implemented with basic controls such as walking (WASD), sprinting (Shift + WASD), and jumping (Space). Since we also wanted the movement to be smooth rather than sudden, we gave the player a slightly slippery effect when walking and stopping. Jumping also has air drag, meaning the longer the player stays in the air, the more the horizontal velocity decreases over time.
 > ## Sliding / Crouching
 >
-> Sliding and Crouching in Swing City has been implemented with the Control key. By holding the Control key, the player shrinks by half the height, allowing them to crawl under small spaces. A nice addition to crouching is when moving before they crouch, they can slide. By sliding, it is the same as crouching, but it maintains the speed for a short time before reverting to crawling speed.
+> Sliding and Crouching in Swing City has been implemented with the Control key. By holding Control, the player shrinks in half, allowing them to crawl under small spaces. A nice addition to crouching is when moving before they crouch, they can slide. Sliding is similar to crouching, but it maintains player speed for a short time before reverting to crawling speed.
 > ## Wallrunning
 >
-> Wallrunning in Swing City has been implemented with a working camera transition. When the player aligns and runs along the wall, the camera tilts smoothly to give the effect of running almost sideways. Wallrunning also lasts for a short time, but they can also jump away from the wall during that time, which leads to wall-jumping.
-Swinging / Grappling
-Swinging and Grappling in Swing City now work fluently with their purpose in levels. They are also highly adjustable and currently show differing colours for distinction. They are controlled by mouse clicks (left click for swinging, and right click for grappling). Swinging currently uses joints while Grappling uses trajectories.
+> Wallrunning in Swing City has been implemented with a working camera tilt. When the player runs along the wall, the camera tilts smoothly to give the effect of running almost sideways. Wallrunning lasts for a short time, but players can jump away from the wall during that time, which leads to wall-jumping.
+
+> ## Swinging / Grappling
+> Swinging and grappling in Swing City now work fluently with their purpose in levels. They are also highly adjustable and currently show differing colours for distinction. They are controlled by mouse clicks (left click for swinging, and right click for grappling). Swinging currently uses joints while Grappling uses trajectories.
 > ## UI
 >
 > Swing City has a working UI for many kinds of menu systems such as the main menu, pause menu, and settings menu. While the options menu is empty since it does not have any adjustable settings yet, the controls menu now shows the visual implementation of which controls refer to which mechanic.
@@ -29,31 +33,37 @@ Swinging and Grappling in Swing City now work fluently with their purpose in lev
 ---------------------------------------------------------------------------
  
 > # Reflection
-> Over the course of developing this project, we have encountered numerous roadblocks that have impacted our game’s development and required changes in order to rectify. These roadblocks range from being small in nature to quite significant to our development cycle. <br>
+> Throughout project development, we have encountered numerous roadblocks that have impacted our game’s development and required changes to rectify. These roadblocks range from being small to quite significant to our development cycle.<br>
 >
-> One such instance was during the development of the first-person camera, where two camera systems were developed at the same time that worked quite differently from one another. This meant that when it came time to implement the camera with the player, there was confusion over which one to keep and which to discard. Eventually, both systems had to be merged together, as there were some features that we desired for the player that could only work well in one of the camera systems, but the second system did other things more efficiently. This situation could have been avoided or lessened if collaboration between the team was more frequent and covered the work we were doing more comprehensively. <br>
+> One such instance was during the development of the first-person camera, where two camera systems were developed at the same time that worked quite differently from one another. This meant that when it came time to implement the camera with the player, there was confusion over which one to keep and which to discard. Eventually, both systems had to be merged, as there were some features that we desired for the player that could only work well in one of the camera systems, but the second system did other things more efficiently. This situation could have been avoided or lessened if collaboration between the team was more frequent and covered the work we were doing more comprehensively. <br>
 >
-> Another instance of this was during the designing of maps for the game, where it seemed that everyone was working on a different scene for a while, which meant that making changes to certain aspects was difficult. These maps also included many objects, making modification of them and changing each object’s layer to reflect whether it could be grappled or wall runned, etc, was cumbersome. In the end, we managed to make most things that needed to be in multiple scenes into prefabs, and began using certain tools such as ProBuilder to make developing new maps easier and more frictionless, though this could have been avoided had we done these things in the first place. <br>
+> Another instance of this was during the designing of maps for the game, where it seemed that everyone was working on a different scene for a while, which meant that making changes to certain aspects was difficult. These maps also included many objects, making modifications of them and changing each object’s layer to reflect whether it could be grappled or wall run, etc, was cumbersome. In the end, we managed to make most things that needed to be in multiple scenes into prefabs and began using certain tools such as ProBuilder to make developing new maps easier and more frictionless, though this could have been avoided had we done these things in the first place.<br>
 >
-> Lastly, in a general sense, our relationship with the time we have to do certain tasks has been shaky, in part due to the fact that we are starting from scratch as a new team this semester. While not unexpected, there have been times where we have completed tasks very close to their due dates, which is risky, and though we have gotten better at managing this over the past few weeks, there is still room to improve. <br>
->
->Ultimately, while we believe we have made good progress with the development of our game, there have been numerous challenges throughout the semester that we have had to recognise and overcome. After reflecting on them, it is clear that significant changes in development have been and will continue to be made in order to get our project done in a timely manner with a level of quality that we can be proud of. <br>
+> Ultimately, while we believe we have made good progress with the development of our game, there have been numerous challenges throughout the semester that we have had to recognise and overcome. After reflecting on them, it is clear that significant changes in development have been and will continue to be made to get our project done promptly and with a level of quality that we can be proud of. 
+<br>
 >
 
 ---
 
+> # Changes in Development
+> The changes in development that have been made for our project have been quite frequent, which we had expected due to how quickly we have had to come up with a new game idea to design mechanics for and build upon over 6 weeks. However, some changes have been made after reflection and feedback that have fundamentally affected the design of our game, which we will go into more detail about in this section. <br>
+>
+> Firstly, the roles that we initially assigned ourselves have been subject to change depending on what needs to be done at that moment. For instance, Luca was originally supposed to be the lead playtester for our project, but since the beginning of the semester, he has been more involved with the programming side due to the amount of work that needed to be done. Our approach to playtesting has also been quite spread out over the team, with each person getting others to play their branch’s version and making changes based on feedback. This shows that consideration of priorities has been taken into account across the team.<br>
+> 
+> Another change made was the way that we would design levels. At first, we were planning on implementing non-linear levels that had larger places to explore, but upon feedback, we decided that we should make more linear levels to play to the strengths of our game rather than having a larger scope that would be harder to meet. This demonstrates that our team can respond to feedback quickly to improve the end experience. <br>
+>
+> These changes have affected our production plan by altering the scope and completion timeline of our project. A smaller scope concerning levels and level content should make it much easier for us to hit our design goals and milestones over the rest of our semester, resulting in our completion timeline being more spread out. They have also affected how view certain aspects of our game during design and development, ensuring we are more open to feedback and alterations. In the end, we believe that the changes that we have made have served to positively impact both the development experience and the final product. <br>
+>
+---
 > # Playtesting
 > ### Playtesting Approach
-> Throughout the development of the project we adopted an iterative playtesting approach, where team members developed separate mechanics and tested them using a basic player controller. As the project progressed, these mechanics were further tested with a more advanced player controller that included features such as wall running and sliding. <br>
+> Throughout the development of the project, we adopted an iterative playtesting approach, where team members developed separate mechanics and tested them using a basic player controller. As the project progressed, these mechanics were further tested with a more advanced player controller that included features such as wall running and sliding.<br>
 >
 > ### Playtesting Influence on Design <br>
-> By using this approach, it significantly influenced the way in which the initial development of mechanics was handled, as it allowed us to rapidly prototype and integrate new features within the group without the need for external play testers for the first half of the semester. <br>
+> By using this approach, it significantly influenced how the initial development of mechanics was handled, as it allowed us to rapidly prototype and integrate new features within the group without the need for external playtesters for the first half of the semester.<br>
 >
-> During development team members worked on their mechanics in separate branches, which resulted in individual playtests in each member's branch.This consequently led to the creation of 4 separate versions of the mechanics parameters like player walk speed and jump height to be created for each player's branch. Due to this method of playtesting being highly individualised it naturally led to highly integrable and adjustable mechanics, ensuring that the team did not need to constantly reset values when updating scenes. <br>
+> During development team members worked on their mechanics in separate branches, which resulted in individual playtests in each member's branch. This consequently led to the creation of 4 separate versions of the mechanics' parameters like player walk speed and jump height to be created for each player's branch. Due to this method of playtesting being highly individualised, it naturally led to highly integrable and adjustable mechanics, ensuring that the team did not need to constantly reset values when updating scenes.<br>
 >
-> Through this process of having 4 separate versions of mechanics parameters, we were also able to determine an optimal range for player controls, such as swinging and grappling early on, enabling the creation of a single, refined version of control input values for the player. This also fits the requirements for all the other mechanics dependent on it such as: wall running requiring the player to reach over a specific threshold of momentum provided by the player movement in order to execute.
-
-> 
+> Through this process of having 4 separate versions of mechanics parameters, we were also able to determine an optimal range for player controls, such as swinging and grappling early on, enabling the creation of a single, refined version of control input values for the player. This also fits the requirements for all the other mechanics dependent on it such as wall running requiring the player to reach over a specific threshold of momentum provided by the player's movement to execute. <br>
 >
->
-> 
+> ---
