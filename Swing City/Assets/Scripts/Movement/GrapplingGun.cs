@@ -21,7 +21,7 @@ public class GrapplingGun : MonoBehaviour
     private Vector3 grapplePoint;
 
     [Header("Swing Settings")]
-    //[SerializeField] private float maxSwingDistance = 50f; // Maximum distance of swinging
+    [SerializeField] private float maxSwingDistance = 50f; // Maximum distance of swinging
     [SerializeField] private float swingDelayTime; // How long swinging will reach?
     [SerializeField] private float minJointDistanceScale = 0.25f; // Minimum distance of joint (Scaled by point to distance)
     [SerializeField] private float maxJointDistanceScale = 0.8f; // Maximum distance of joint (Scaled by point to distance)
@@ -150,7 +150,7 @@ public class GrapplingGun : MonoBehaviour
         
         // Raycast to shoot grapple. If miss, set point at the maximum distance of ray
         RaycastHit hit;
-        if (Physics.Raycast(cam.position, cam.forward, out hit, maxGrappleDistance, canGrapple))
+        if (Physics.Raycast(cam.position, cam.forward, out hit, maxSwingDistance, canGrapple))
         {
             grapplePoint = hit.point;
             
@@ -158,7 +158,7 @@ public class GrapplingGun : MonoBehaviour
         }
         else
         {
-            grapplePoint = cam.position + cam.forward * maxGrappleDistance;
+            grapplePoint = cam.position + cam.forward * maxSwingDistance;
 
             Invoke(nameof(StopSwing), swingDelayTime); // stop swinging
         }

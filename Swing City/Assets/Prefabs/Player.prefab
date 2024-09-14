@@ -506,12 +506,13 @@ MonoBehaviour:
     m_Bits: 136
   grappleTip: {fileID: 5947359258490579511}
   cam: {fileID: 4950553035266971344}
-  maxGrappleDistance: 100
+  maxGrappleDistance: 20
   grappleDuration: 1
   grappleDelayTime: 0.2
   overshootYAxis: 0
   overshootXZScale: 3
   grappleCooldown: 1.5
+  maxSwingDistance: 15
   swingDelayTime: 0.2
   minJointDistanceScale: 0.25
   maxJointDistanceScale: 0.6
