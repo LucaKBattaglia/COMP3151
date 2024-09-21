@@ -13,7 +13,7 @@ public class timer : MonoBehaviour
 
     void Start()
     {
-        tmp = GetComponentInChildren<TextMeshProUGUI>();
+        tmp = GetComponent<TextMeshProUGUI>();
         curTime = 0f;
         getTime();
         tmp.text = "Time: " + curTime.ToString();
@@ -27,7 +27,7 @@ public class timer : MonoBehaviour
             curTime = curTime + Time.deltaTime;
         }
         getTime();
-        tmp.text = time2String(time.Hours) + ":" + time2String(time.Minutes) + ":" + time2String(time.Seconds) + ":" + time2String(time.Milliseconds, true);
+        tmp.text = "Time: " + time2String(time.Hours) + ":" + time2String(time.Minutes) + ":" + time2String(time.Seconds) + ":" + time2String(time.Milliseconds, true);
     }
 
     void FixedUpdate()
