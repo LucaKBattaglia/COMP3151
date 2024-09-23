@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -70,8 +70,15 @@ public class GameManager : MonoBehaviour
     public void SetRecordTime(string levelName, TimeSpan newTime) {
         if (recordTimes.ContainsKey(levelName))
         {
-            recordTimes[levelName] = newTime;
-            Debug.Log($"{levelName} recorded with {newTime.ToString()}!");
+            if (recordTimes[levelName].TotalMilliseconds > newTime.TotalMilliseconds)
+            {
+                recordTimes[levelName] = newTime;
+                Debug.Log($"{levelName} recorded with {newTime.ToString()}!");
+            }
+            else
+            {
+                Debug.Log($"{levelName} finished with {newTime.ToString()} but did not beat {recordTimes[levelName].ToString()}. Better luck next time.");
+            }
         }
         else
         {
