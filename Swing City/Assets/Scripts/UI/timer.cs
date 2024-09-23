@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using System;
 
-public class timer : MonoBehaviour
+public class Timer : MonoBehaviour
 {
     public TextMeshProUGUI tmp;
     public TimeSpan time;
@@ -53,6 +53,9 @@ public class timer : MonoBehaviour
 
     public void start() { active = true; }
     public void stop()  { active = false; }
-    public void getTime() { time = TimeSpan.FromSeconds(curTime); }
-
+    public TimeSpan getTime()
+    {
+        time = TimeSpan.FromSeconds(curTime);
+        return time;
+    }
 }

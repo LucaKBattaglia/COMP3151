@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,6 +8,14 @@ public class GameManager : MonoBehaviour
 
     // Dictionary to store key states (true if collected)
     private Dictionary<string, bool> collectedKeys = new Dictionary<string, bool>();
+
+    private Dictionary<string, TimeSpan> recordTimes = new Dictionary<string, TimeSpan>();
+
+    // DEBUG MODE
+    [Header("Debug Mode")]
+    [SerializeField] private bool getKey1 = false;
+    [SerializeField] private bool getKey2 = false;
+    [SerializeField] private bool getKey3 = false;
 
     // Awake is called when the script instance is being loaded
     void Awake()
@@ -22,10 +31,14 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // Predefine keys in the dictionary with default values as false (not collected)
-        collectedKeys.Add("Key1", false);
-        collectedKeys.Add("Key2", false);
-        collectedKeys.Add("Key3", false);
+        // Predefine keys in the dictionary with default values as false (not collected) unless specified by Debug Mode
+        collectedKeys.Add("Key1", getKey1);
+        collectedKeys.Add("Key2", getKey2);
+        collectedKeys.Add("Key3", getKey3);
+
+        recordTimes.Add("Level1", TimeSpan.Zero);
+        recordTimes.Add("Level2", TimeSpan.Zero);
+        recordTimes.Add("Level3", TimeSpan.Zero);
     }
 
     // Method to collect any key by name
@@ -39,7 +52,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"Key \"{keyName}\" does not exist in the dictionary.");
+            Debug.LogWarning($"Key \"{keyName}\" does not exist in the key dictionary.");
         }
     }
 
@@ -52,5 +65,31 @@ public class GameManager : MonoBehaviour
             return collectedKeys[keyName];
         }
         return false;
+    }
+
+    public void SetRecordTime(string levelName, TimeSpan newTime) {
+        if (recordTimes.ContainsKey(levelName))
+        {
+            recordTimes[levelName] = newTime;
+            Debug.Log($"{levelName} recorded with {newTime.ToString()}!");
+        }
+        else
+        {
+            Debug.LogWarning($"Level \"{levelName}\" does not exist in the level dictionary.");
+        }
+    }
+
+    // Method to receive the beaten time from a specified level by name
+    public TimeSpan GetRecordTime(string levelName)
+    {
+        if (recordTimes.ContainsKey(levelName))
+        {
+            if (!string.Equals(recordTimes[levelName].ToString(), TimeSpan.Zero.ToString())) return recordTimes[levelName];
+        }
+        else
+        {
+            Debug.LogWarning($"Level \"{levelName}\" does not exist in the level dictionary.");
+        }
+        return TimeSpan.Zero;
     }
 }
