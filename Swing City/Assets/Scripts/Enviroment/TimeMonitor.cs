@@ -6,8 +6,8 @@ using TMPro;
 
 public class TimeMonitor : MonoBehaviour
 {
-    [SerializeField] private string levelName;
-    [SerializeField] private TextMeshPro tmp;
+    [SerializeField] private string levelName; // Name of Level to display
+    [SerializeField] private TextMeshPro tmp; // Text Component
 
     private TimeSpan recordTime;
     private string timeString;
@@ -15,7 +15,10 @@ public class TimeMonitor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Receive the Best Time in TimeSpan component if there is
         recordTime = GameManager.instance.GetRecordTime(this.transform.parent.name);
+
+        // If the best time is zero, there is no record. Set to blank if it's zero.
         if (string.Equals(recordTime.ToString(), TimeSpan.Zero.ToString()))
         {
             timeString = "--:--:--:---";
@@ -24,13 +27,9 @@ public class TimeMonitor : MonoBehaviour
         {
             timeString = time2String(recordTime.Hours) + ":" + time2String(recordTime.Minutes) + ":" + time2String(recordTime.Seconds) + ":" + time2String(recordTime.Milliseconds, true);
         }
-        tmp.text = levelName + "<br><br>Best Time: <br>" + timeString;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Display the text on the monitor
+        tmp.text = levelName + "<br><br>Best Time: <br>" + timeString;
     }
 
     public string time2String(int val, bool isMil = false) {
