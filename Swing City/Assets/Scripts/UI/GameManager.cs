@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    private GameData gameData;
+
     // Dictionary to store key states (true if collected)
     private Dictionary<string, bool> collectedKeys = new Dictionary<string, bool>();
 
@@ -39,6 +41,11 @@ public class GameManager : MonoBehaviour
         recordTimes.Add("Level1", TimeSpan.Zero);
         recordTimes.Add("Level2", TimeSpan.Zero);
         recordTimes.Add("Level3", TimeSpan.Zero);
+    }
+
+    private void Start()
+    {
+        LoadGame();
     }
 
     // Method to collect any key by name
@@ -98,5 +105,33 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning($"Level \"{levelName}\" does not exist in the level dictionary.");
         }
         return TimeSpan.Zero;
+    }
+
+    // GAME DATA //
+    public void NewGame()
+    {
+        this.gameData = new GameData();
+    }
+
+    public void LoadGame()
+    {
+        if (this.gameData == null)
+        {
+            Debug.Log("No data found. Setting data to defaults.");
+            NewGame();
+        }
+
+        recordTimes["Level1"] = gameData.recordTime;
+        Debug.Log(recordTimes["Level1"].ToString());
+    }
+
+    public void SaveGame()
+    {
+        Debug.Log("Game Data saved with " + gameData.recordTime.ToString() + ". Goodbye!");
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveGame();
     }
 }
