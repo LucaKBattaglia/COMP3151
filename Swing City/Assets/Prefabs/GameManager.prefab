@@ -44,3 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b1f64f69fbd4c9991c9906ad549bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fileName: records.scity
+  useEncryption: 0
+  getKey1: 0
+  getKey2: 0
+  getKey3: 0

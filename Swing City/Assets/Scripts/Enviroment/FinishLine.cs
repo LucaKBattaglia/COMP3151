@@ -13,7 +13,7 @@ public class FinishLine : MonoBehaviour
         {
             // Player collects the key
             GameManager.instance.CollectKey("Key" + keyNumber);
-            GameManager.instance.SetRecordTime(SceneManager.GetActiveScene().name, GameObject.Find("Timer").GetComponent<Timer>().getTime());
+            if (!String.Equals(SceneManager.GetActiveScene().name, "PrototypeScene")) GameManager.instance.SetRecordTime(SceneManager.GetActiveScene().name, GameObject.Find("Timer").GetComponent<Timer>().getTime());
             SceneManager.LoadScene("Hub");
             Debug.Log("U have got key 1");
         }

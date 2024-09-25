@@ -1,23 +1,28 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    private GameData gameData;
-
-    // Dictionary to store key states (true if collected)
-    private Dictionary<string, bool> collectedKeys = new Dictionary<string, bool>();
-
-    private Dictionary<string, TimeSpan> recordTimes = new Dictionary<string, TimeSpan>();
+    [Header("File Storage Config")]
+    [SerializeField] private string fileName;
+    [SerializeField] private bool useEncryption;
 
     // DEBUG MODE
     [Header("Debug Mode")]
     [SerializeField] private bool getKey1 = false;
     [SerializeField] private bool getKey2 = false;
     [SerializeField] private bool getKey3 = false;
+
+    private GameData gameData;
+    private FileDataHandler dataHandler;
+
+    // Dictionary to store key states (true if collected)
+    private Dictionary<string, bool> collectedKeys = new Dictionary<string, bool>();
 
     // Awake is called when the script instance is being loaded
     void Awake()
@@ -37,14 +42,11 @@ public class GameManager : MonoBehaviour
         collectedKeys.Add("Key1", getKey1);
         collectedKeys.Add("Key2", getKey2);
         collectedKeys.Add("Key3", getKey3);
-
-        recordTimes.Add("Level1", TimeSpan.Zero);
-        recordTimes.Add("Level2", TimeSpan.Zero);
-        recordTimes.Add("Level3", TimeSpan.Zero);
     }
 
     private void Start()
     {
+        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
         LoadGame();
     }
 
@@ -75,30 +77,30 @@ public class GameManager : MonoBehaviour
     }
 
     public void SetRecordTime(string levelName, TimeSpan newTime) {
-        if (recordTimes.ContainsKey(levelName))
+        if (gameData.recordTimes.ContainsKey(levelName))
         {
-            if (recordTimes[levelName].TotalMilliseconds > newTime.TotalMilliseconds)
+            if (gameData.recordTimes[levelName] == 0f || gameData.recordTimes[levelName] > newTime.TotalMilliseconds)
             {
-                recordTimes[levelName] = newTime;
+                gameData.recordTimes[levelName] = newTime.TotalMilliseconds;
                 Debug.Log($"{levelName} recorded with {newTime.ToString()}!");
             }
             else
             {
-                Debug.Log($"{levelName} finished with {newTime.ToString()} but did not beat {recordTimes[levelName].ToString()}. Better luck next time.");
+                Debug.Log($"{levelName} finished with {newTime.ToString()} but did not beat {gameData.recordTimes[levelName].ToString()}. Better luck next time.");
             }
         }
         else
         {
-            Debug.LogWarning($"Level \"{levelName}\" does not exist in the level dictionary.");
+            gameData.recordTimes.Add(levelName, newTime.TotalMilliseconds);
         }
     }
 
     // Method to receive the beaten time from a specified level by name
     public TimeSpan GetRecordTime(string levelName)
     {
-        if (recordTimes.ContainsKey(levelName))
+        if (gameData != null && gameData.recordTimes.ContainsKey(levelName))
         {
-            if (!string.Equals(recordTimes[levelName].ToString(), TimeSpan.Zero.ToString())) return recordTimes[levelName];
+            if (!string.Equals(TimeSpan.FromMilliseconds(gameData.recordTimes[levelName]).ToString(), TimeSpan.Zero.ToString())) return TimeSpan.FromMilliseconds(gameData.recordTimes[levelName]);
         }
         else
         {
@@ -115,19 +117,22 @@ public class GameManager : MonoBehaviour
 
     public void LoadGame()
     {
+        // Load any saved data from a file using Data Handler
+        this.gameData = dataHandler.Load();
+        
+        // If no data exists from a file, create new game data
         if (this.gameData == null)
         {
             Debug.Log("No data found. Setting data to defaults.");
             NewGame();
         }
-
-        recordTimes["Level1"] = gameData.recordTime;
-        Debug.Log(recordTimes["Level1"].ToString());
     }
 
     public void SaveGame()
     {
-        Debug.Log("Game Data saved with " + gameData.recordTime.ToString() + ". Goodbye!");
+        // Save data to a file using Data Handler
+        dataHandler.Save(gameData);
+        Debug.Log("Game Data saved. Goodbye!");
     }
 
     private void OnApplicationQuit()

@@ -6,14 +6,12 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
-    public TimeSpan recordTime;
-    //public SerializableDictionary<string, TimeSpan> recordTimes;
+    public SerializableDictionary<string, double> recordTimes;
 
-    // the values defined in this constructor will be the default values
-    // the game starts with when there's no data to load
+    // The values defined in this constructor will be the default values
+    // The game starts with when there's no data to load
     public GameData() 
     {
-        this.recordTime = TimeSpan.Zero;
-        //recordTimes = new SerializableDictionary<string, TimeSpan>();
+        recordTimes = new SerializableDictionary<string, double>();
     }
 }
