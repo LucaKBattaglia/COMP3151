@@ -42364,60 +42364,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3947399815736029709, guid: d326a00507b542e4190e8c677ff5a0ed, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6019246292181843061, guid: d326a00507b542e4190e8c677ff5a0ed, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -53.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6325047353029483503, guid: d326a00507b542e4190e8c677ff5a0ed, type: 3}
-      propertyPath: m_CullTransparentMesh
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7057998490042637357, guid: d326a00507b542e4190e8c677ff5a0ed, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8013248698300094030, guid: d326a00507b542e4190e8c677ff5a0ed, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8703046166160788010, guid: d326a00507b542e4190e8c677ff5a0ed, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8703046166160788010, guid: d326a00507b542e4190e8c677ff5a0ed, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8703046166160788010, guid: d326a00507b542e4190e8c677ff5a0ed, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8703046166160788010, guid: d326a00507b542e4190e8c677ff5a0ed, type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8703046166160788010, guid: d326a00507b542e4190e8c677ff5a0ed, type: 3}
-      propertyPath: m_Maskable
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8703046166160788010, guid: d326a00507b542e4190e8c677ff5a0ed, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8703046166160788010, guid: d326a00507b542e4190e8c677ff5a0ed, type: 3}
-      propertyPath: m_UseSpriteMesh
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8703046166160788010, guid: d326a00507b542e4190e8c677ff5a0ed, type: 3}
-      propertyPath: m_PreserveAspect
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9082516321542608207, guid: d326a00507b542e4190e8c677ff5a0ed, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
