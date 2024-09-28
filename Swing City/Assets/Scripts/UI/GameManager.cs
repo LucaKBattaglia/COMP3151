@@ -8,6 +8,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [Header("Default Player Settings")]
+    public float sensXRate = 0.4f;
+    public float sensYRate = 0.4f;
+    
     [Header("File Storage Config")]
     [SerializeField] private string fileName;
     [SerializeField] private bool useEncryption;
