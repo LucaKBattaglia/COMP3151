@@ -11162,11 +11162,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!4 &683609795 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4950553035266971344, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
-  m_PrefabInstance: {fileID: 1619670750}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &704688563
 Mesh:
   m_ObjectHideFlags: 0
@@ -35412,10 +35407,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4668777591852058421, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
-      propertyPath: cam
-      value: 
-      objectReference: {fileID: 683609795}
     - target: {fileID: 4757837077297399718, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -13
