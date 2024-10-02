@@ -122,7 +122,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            respawn(curCheckpoint.transform.position);
+            transform.position = curCheckpoint.transform.position;
+            controlSpd = true;
         }
    
         // handle drag
@@ -302,13 +303,6 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 GetSlopeMoveDirection(Vector3 dir)
     {
         return Vector3.ProjectOnPlane(dir, slopeHit.normal).normalized;
-    }
-
-    public void respawn(Vector3 checkpoint) { 
-        //fadeImg.fadeIn();
-        controlSpd = true;
-        transform.position = checkpoint;
-        //fadeImg.fadeOut();
     }
 
     public void boost(Vector3 dir, int spd, Vector3 pos) {
