@@ -217,8 +217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 407415a4a4e8e0f4b86a5574cff287de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 200
-  sensY: 200
+  sensX: 2500
+  sensY: 2500
   player: {fileID: 3153245809772258800}
   orientation: {fileID: 1584755760412390282}
   camPos: {fileID: 4008136819870357609}
