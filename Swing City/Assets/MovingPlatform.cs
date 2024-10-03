@@ -28,8 +28,8 @@ public class MovingPlatform : MonoBehaviour
         curInd = 1; // current point to move to is the second child
         curP = points[curInd].position;  // get that child
         arrDir = true; // loop forwards through array
-        moveDir = (curP - transform.position).normalized; // set direction
         transform.position = startP; // set position to starting point
+        moveDir = (curP - transform.position).normalized; // set direction
     }
 
     void Update() {

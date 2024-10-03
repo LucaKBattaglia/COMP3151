@@ -320,6 +320,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Moving Platform
       objectReference: {fileID: 0}
+    - target: {fileID: 8142371792090716599, guid: c55d826a34acd8848a225151e0a0cb20, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8142371792090716599, guid: c55d826a34acd8848a225151e0a0cb20, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8585831331762874089, guid: c55d826a34acd8848a225151e0a0cb20, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -416,6 +424,10 @@ PrefabInstance:
     - target: {fileID: 7151278860496271373, guid: d4c8b4ff569551d419ed777ec1d7cea6, type: 3}
       propertyPath: m_Name
       value: Bouncy Cylinder
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151278860496271373, guid: d4c8b4ff569551d419ed777ec1d7cea6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
