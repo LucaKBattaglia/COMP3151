@@ -13,15 +13,6 @@ public class GrapplingGun : MonoBehaviour
     private Color grapplePanelColor;
     [SerializeField] private Renderer swingPanel; // Indication panel for swinging
     private Color swingPanelColor;
-
-    [Header("UI Crosshair")]
-    [SerializeField] private RectTransform crosshairRect;
-    [SerializeField] private float enlargeHitScale = 2f;
-    [SerializeField] private Image crosshairImage;
-    [SerializeField] private Color crosshairGrappleColor = Color.red;
-    [SerializeField] private Color crosshairSwingColor = Color.blue;
-    private Color crosshairInitColor;
-    private bool isCrosshairConfigured;
     
     [Header("Grapple Settings")]
     [SerializeField] private float maxGrappleDistance = 100f; // Maximum distance of grappling
@@ -73,15 +64,6 @@ public class GrapplingGun : MonoBehaviour
         grapplePanelColor = grapplePanel.material.GetColor("_EmissionColor");
         swingPanel = swingPanel.gameObject.GetComponent<Renderer>();
         swingPanelColor = swingPanel.material.GetColor("_EmissionColor");
-        if (crosshairImage != null && crosshairRect != null)
-        {
-            crosshairInitColor = crosshairImage.color;
-            isCrosshairConfigured = true;
-        }
-        else
-        {
-            isCrosshairConfigured = false;
-        }
     }
 
     // Update is called once per frame
@@ -116,26 +98,6 @@ public class GrapplingGun : MonoBehaviour
         else
         {
             swingPanel.material.SetColor("_EmissionColor", swingPanelColor);
-        }
-
-        if (isCrosshairConfigured)
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(cam.position, cam.forward, out hit, maxSwingDistance, canGrapple))
-            {
-                crosshairRect.localScale = new Vector3(enlargeHitScale, enlargeHitScale, 1f);
-                crosshairImage.color = crosshairSwingColor;
-            }
-            else if (Physics.Raycast(cam.position, cam.forward, out hit, maxGrappleDistance, canGrapple))
-            {
-                crosshairRect.localScale = new Vector3(enlargeHitScale, enlargeHitScale, 1f);
-                crosshairImage.color = crosshairGrappleColor;
-            }
-            else
-            {
-                crosshairRect.localScale = new Vector3(1f, 1f, 1f);
-                crosshairImage.color = crosshairInitColor;
-            }
         }
     }
 
