@@ -61,6 +61,14 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Momentum")]
     public float swingDecceleration = 2f;
+
+    private bool onIce = false;
+
+    // Method called by the ice surface script to set the onIce status
+    public void SetOnIce(bool isOnIce)
+    {
+        onIce = isOnIce;
+    }
     
 
     public Transform orientation;
@@ -263,12 +271,17 @@ public class PlayerMovement : MonoBehaviour
         // limiting speed on ground or in air
         else
         {
-            Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-            // limit velocity if needed
-            if (flatVel.magnitude > moveSpeed)
-            {
-                Vector3 limitedVel = flatVel.normalized * moveSpeed;
-                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // Get only horizontal velocity
+
+            if (onIce) { // Allow sliding without speed limits, but preserve the vertical velocity
+            rb.velocity = new Vector3(flatVel.x, rb.velocity.y, flatVel.z); // Keep the current y velocity for jumping
+            }
+            
+            else { // Limit velocity if the player is not on ice
+                if (flatVel.magnitude > moveSpeed){
+                    Vector3 limitedVel = flatVel.normalized * moveSpeed;
+                    rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z); // Preserve the y component for jumping
+                }
             }
         }
     }

@@ -13,7 +13,7 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
-        tmp = GetComponent<TextMeshProUGUI>();
+        tmp = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         curTime = 0f;
         getTime();
         tmp.text = "Time: " + curTime.ToString();
