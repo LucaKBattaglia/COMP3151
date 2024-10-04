@@ -258,33 +258,86 @@ public class PlayerMovement : MonoBehaviour
         rb.useGravity = !OnSlope();
     }
 
-    private void SpeedControl()
+private void SpeedControl()
+{
+    // limiting speed on slope
+    if (OnSlope() && !exitingSlope)
     {
-        //print(moveSpeed);
-        // limiting speed on slope
-        if (OnSlope() && !exitingSlope)
+        if (rb.velocity.magnitude > moveSpeed)
         {
-            if (rb.velocity.magnitude > moveSpeed) {
-                rb.velocity = rb.velocity.normalized * moveSpeed;
-            }
-        }
-        // limiting speed on ground or in air
-        else
-        {
-            Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // Get only horizontal velocity
-
-            if (onIce) { // Allow sliding without speed limits, but preserve the vertical velocity
-            rb.velocity = new Vector3(flatVel.x, rb.velocity.y, flatVel.z); // Keep the current y velocity for jumping
-            }
-            
-            else { // Limit velocity if the player is not on ice
-                if (flatVel.magnitude > moveSpeed){
-                    Vector3 limitedVel = flatVel.normalized * moveSpeed;
-                    rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z); // Preserve the y component for jumping
-                }
-            }
+            rb.velocity = rb.velocity.normalized * moveSpeed;
         }
     }
+    // limiting speed on ground or in air
+    else
+    {
+        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // Get only horizontal velocity
+
+        // Limit velocity if the player is not on ice
+        if (flatVel.magnitude > moveSpeed && onIce==false)
+        {
+            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z); // Preserve the y component for jumping
+        
+            if (onIce)
+            {
+                // Allow sliding without speed limits, but preserve the vertical velocity
+                rb.velocity = new Vector3(flatVel.x, rb.velocity.y, flatVel.z); // Keep the current y velocity for jumping
+            }
+
+            else {
+                StartCoroutine(ReduceSpeedGradually(flatVel));
+                limitedVel = flatVel.normalized * moveSpeed;
+                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            }
+
+        }
+
+        else {
+            StartCoroutine(ReduceSpeedGradually(flatVel));
+        }
+    }
+    
+}
+
+// Coroutine to reduce the player's speed by 33% of the speed exceeding the moveSpeed over 3 seconds
+private IEnumerator ReduceSpeedGradually(Vector3 initialFlatVel)
+{
+    float elapsedTime = 0f;
+    float duration = 5f; // 3 seconds duration
+    float initialExcessSpeed = initialFlatVel.magnitude - moveSpeed; // Calculate the amount of excess speed
+    Vector3 direction = initialFlatVel.normalized; // Keep the direction of the initial movement
+
+    while (elapsedTime < duration)
+    {
+        elapsedTime += Time.deltaTime;
+
+        // Recalculate the flat velocity, this ensures we check for any updated input
+        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        // If the player has stopped moving or changes direction, stop reducing speed
+        if (flatVel.magnitude <= moveSpeed || flatVel.normalized != direction)
+        {
+            yield break; // Stop the coroutine
+        }
+
+        // Reduce speed by 33% of the excess speed over the target speed over 3 seconds
+        float decelerationFactor = Mathf.Lerp(1f, 0.67f, elapsedTime / duration);
+        float newSpeed = moveSpeed + initialExcessSpeed * decelerationFactor;
+
+        // Clamp the speed so it does not go below moveSpeed
+        newSpeed = Mathf.Max(newSpeed, moveSpeed);
+
+        // Apply the decelerated velocity while preserving the y component (vertical velocity)
+        rb.velocity = new Vector3(direction.x * newSpeed, rb.velocity.y, direction.z * newSpeed);
+
+        yield return null; // Wait for the next frame
+    }
+
+    // After 3 seconds, make sure the velocity does not exceed moveSpeed
+    rb.velocity = new Vector3(direction.x * moveSpeed, rb.velocity.y, direction.z * moveSpeed);
+}
+
 
     private void Jump()
     {
