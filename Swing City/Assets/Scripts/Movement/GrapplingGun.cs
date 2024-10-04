@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GrapplingGun : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class GrapplingGun : MonoBehaviour
     [SerializeField] private LayerMask canGrapple; // What layer should it detect?
     [SerializeField] private Transform grappleTip; // Where will the tip of the grappling gun be at?
     [SerializeField] private Transform cam; // Connect to player camera
+    [SerializeField] private Renderer grapplePanel; // Indication panel for grappling
+    private Color grapplePanelColor;
+    [SerializeField] private Renderer swingPanel; // Indication panel for swinging
+    private Color swingPanelColor;
     
     [Header("Grapple Settings")]
     [SerializeField] private float maxGrappleDistance = 100f; // Maximum distance of grappling
@@ -55,6 +60,10 @@ public class GrapplingGun : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        grapplePanel = grapplePanel.gameObject.GetComponent<Renderer>();
+        grapplePanelColor = grapplePanel.material.GetColor("_EmissionColor");
+        swingPanel = swingPanel.gameObject.GetComponent<Renderer>();
+        swingPanelColor = swingPanel.material.GetColor("_EmissionColor");
     }
 
     // Update is called once per frame
@@ -64,9 +73,14 @@ public class GrapplingGun : MonoBehaviour
         {
             StartGrapple();
         }
-        if (grappleCooldownTimer > 0f)
+        if (grappleCooldownTimer > 0f && !isGrappling)
         {
             grappleCooldownTimer -= Time.deltaTime;
+            grapplePanel.material.SetColor("_EmissionColor", Color.black);
+        }
+        else
+        {
+            grapplePanel.material.SetColor("_EmissionColor", grapplePanelColor);
         }
         if (Input.GetKeyDown(swingKey))
         {
@@ -76,9 +90,14 @@ public class GrapplingGun : MonoBehaviour
         {
             StopSwing();
         }
-        if (swingCooldownTimer > 0f)
+        if (swingCooldownTimer > 0f && !isSwinging)
         {
             swingCooldownTimer -= Time.deltaTime;
+            swingPanel.material.SetColor("_EmissionColor", Color.black);
+        }
+        else
+        {
+            swingPanel.material.SetColor("_EmissionColor", swingPanelColor);
         }
     }
 
