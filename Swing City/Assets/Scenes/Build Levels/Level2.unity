@@ -4186,6 +4186,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d326a00507b542e4190e8c677ff5a0ed, type: 3}
+--- !u!4 &1201680070 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4008136819870357609, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
+  m_PrefabInstance: {fileID: 1528546471}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1330382623
 Mesh:
   m_ObjectHideFlags: 0
@@ -4463,13 +4468,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2092548227689302334, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
+      propertyPath: cameraPosition
+      value: 
+      objectReference: {fileID: 1201680070}
     - target: {fileID: 4757837077297399718, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 4757837077297399718, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4757837077297399718, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
       propertyPath: m_LocalPosition.z
