@@ -1,10 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using System;
 
-public class timer : MonoBehaviour
+public class Timer : MonoBehaviour
 {
     public TextMeshProUGUI tmp;
     public TimeSpan time;
@@ -13,7 +13,7 @@ public class timer : MonoBehaviour
 
     void Start()
     {
-        tmp = GetComponentInChildren<TextMeshProUGUI>();
+        tmp = GetComponent<TextMeshProUGUI>();
         curTime = 0f;
         getTime();
         tmp.text = "Time: " + curTime.ToString();
@@ -27,7 +27,7 @@ public class timer : MonoBehaviour
             curTime = curTime + Time.deltaTime;
         }
         getTime();
-        tmp.text = time2String(time.Hours) + ":" + time2String(time.Minutes) + ":" + time2String(time.Seconds) + ":" + time2String(time.Milliseconds, true);
+        tmp.text = "Time: " + time2String(time.Hours) + ":" + time2String(time.Minutes) + ":" + time2String(time.Seconds) + ":" + time2String(time.Milliseconds, true);
     }
 
     void FixedUpdate()
@@ -53,6 +53,9 @@ public class timer : MonoBehaviour
 
     public void start() { active = true; }
     public void stop()  { active = false; }
-    public void getTime() { time = TimeSpan.FromSeconds(curTime); }
-
+    public TimeSpan getTime()
+    {
+        time = TimeSpan.FromSeconds(curTime);
+        return time;
+    }
 }
