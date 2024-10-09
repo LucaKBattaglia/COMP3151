@@ -60,4 +60,17 @@ public class MovingPlatform : MonoBehaviour
     void moveArr(bool d) { // input false for subtraction, true for addition
         curInd = d ? curInd+1 : curInd-1;
     }
+
+    /*private void OnCollisionStay(Collision other)
+    {
+        //other.transform.parent.SetParent(transform);
+        other.transform.SetParent(transform);
+        
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        //other.transform.parent.SetParent(null);
+        other.transform.SetParent(null);
+    }*/
 }
