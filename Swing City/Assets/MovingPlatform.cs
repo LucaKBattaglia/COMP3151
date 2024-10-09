@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
+    int DEFAULT;
     public bool loop; // whether platform goes back and forth between points or just respawns at the start point
     public int spd; // how fast the platform moves
     public Vector3 moveDir; // the direction the platform is currently moving
@@ -11,6 +12,7 @@ public class MovingPlatform : MonoBehaviour
     public Vector3 endP; // the ending position
     public Vector3 curP; // the current point to move to
     public Transform[] points; // in case we ever wanna do complex moving platforms
+    public PlayerMovement pm;
     bool arrDir; // the direction the point array is being looped through (true is ->, false is <-)
     int curInd; // the current index corresponding to curP
 
@@ -19,6 +21,7 @@ public class MovingPlatform : MonoBehaviour
         Transform pObj = transform.parent.GetChild(p);
         points = new Transform[pObj.childCount];
         for(int i = 0; i < pObj.childCount; i++) points[i] = pObj.GetChild(i);
+        DEFAULT = transform.childCount;
         init();
     }
 
@@ -32,7 +35,7 @@ public class MovingPlatform : MonoBehaviour
         moveDir = (curP - transform.position).normalized; // set direction
     }
 
-    void Update() {
+    void FixedUpdate() {
         if(Vector3.Distance(curP, transform.position) < 0.1f) { // if close enough to the current point
             if(curP == endP || curP == startP) { // if at the end or start 
                 if(loop) { // if looping
@@ -42,6 +45,9 @@ public class MovingPlatform : MonoBehaviour
                     moveDir = (curP-transform.position).normalized; // and get the direction
                 }
                 else {
+                    if(transform.childCount > DEFAULT) {
+                        removePlayer(transform.GetChild(0).transform);
+                    }
                     init(); // if not looping, just reset the platform
                 }
             }
@@ -61,16 +67,21 @@ public class MovingPlatform : MonoBehaviour
         curInd = d ? curInd+1 : curInd-1;
     }
 
-    private void OnCollisionStay(Collision other)
-    {
-        //other.transform.parent.SetParent(transform);
-        other.transform.SetParent(transform);
-        
+    void removePlayer(Transform other) {
+        other.transform.SetParent(null);
+        pm = null;
     }
 
-    private void OnCollisionExit(Collision other)
-    {
-        //other.transform.parent.SetParent(null);
-        other.transform.SetParent(null);
+    private void OnCollisionEnter(Collision other) {
+        if(other.transform.tag == "Player") {
+            other.transform.SetParent(transform);
+            pm = other.transform.GetComponent<PlayerMovement>();
+        }
+    }
+
+    private void OnCollisionExit(Collision other) {
+        if(other.transform.tag == "Player") {
+            removePlayer(other.transform);
+        }
     }
 }
