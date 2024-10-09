@@ -61,7 +61,7 @@ public class MovingPlatform : MonoBehaviour
         curInd = d ? curInd+1 : curInd-1;
     }
 
-    /*private void OnCollisionStay(Collision other)
+    private void OnCollisionStay(Collision other)
     {
         //other.transform.parent.SetParent(transform);
         other.transform.SetParent(transform);
@@ -72,5 +72,5 @@ public class MovingPlatform : MonoBehaviour
     {
         //other.transform.parent.SetParent(null);
         other.transform.SetParent(null);
-    }*/
+    }
 }
