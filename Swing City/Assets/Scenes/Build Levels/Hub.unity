@@ -5852,7 +5852,7 @@ PrefabInstance:
       objectReference: {fileID: 57819920}
     - target: {fileID: 5638197654114778108, guid: 536833d5fa36845cfacb4645dca76267, type: 3}
       propertyPath: m_Name
-      value: Door - Right
+      value: Level3
       objectReference: {fileID: 0}
     - target: {fileID: 5872154557667273356, guid: 536833d5fa36845cfacb4645dca76267, type: 3}
       propertyPath: m_Mesh
@@ -21682,7 +21682,7 @@ PrefabInstance:
       objectReference: {fileID: 1355174236}
     - target: {fileID: 5638197654114778108, guid: 536833d5fa36845cfacb4645dca76267, type: 3}
       propertyPath: m_Name
-      value: Door - Left
+      value: Level1
       objectReference: {fileID: 0}
     - target: {fileID: 5872154557667273356, guid: 536833d5fa36845cfacb4645dca76267, type: 3}
       propertyPath: m_Mesh
@@ -24627,7 +24627,7 @@ PrefabInstance:
       objectReference: {fileID: 707486370}
     - target: {fileID: 5638197654114778108, guid: 536833d5fa36845cfacb4645dca76267, type: 3}
       propertyPath: m_Name
-      value: Door - Middle
+      value: Level2
       objectReference: {fileID: 0}
     - target: {fileID: 5872154557667273356, guid: 536833d5fa36845cfacb4645dca76267, type: 3}
       propertyPath: m_Mesh
