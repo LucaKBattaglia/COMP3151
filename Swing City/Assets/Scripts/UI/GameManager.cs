@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     private GameData gameData;
     private FileDataHandler dataHandler;
+    private LogFile log;
 
     // Dictionary to store key states (true if collected)
     private Dictionary<string, bool> collectedKeys = new Dictionary<string, bool>();
@@ -50,6 +51,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        // find the logfile script
+        log = gameObject.GetComponent<LogFile>();
+        
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
         LoadGame();
     }
@@ -137,6 +141,11 @@ public class GameManager : MonoBehaviour
         // Save data to a file using Data Handler
         dataHandler.Save(gameData);
         Debug.Log("Game Data saved. Goodbye!");
+    }
+
+    public void LogToFile(params object[] args)
+    {
+        log.WriteLine(args);
     }
 
     private void OnApplicationQuit()
