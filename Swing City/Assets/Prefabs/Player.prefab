@@ -708,20 +708,20 @@ MonoBehaviour:
   cam: {fileID: 4950553035266971344}
   grapplePanel: {fileID: 4746777382809127859}
   swingPanel: {fileID: 3026981921618517201}
-  maxGrappleDistance: 20
+  maxGrappleDistance: 25
   grappleDuration: 1
   grappleDelayTime: 0.2
   overshootYAxis: 0
   overshootXZScale: 3
-  grappleCooldown: 1.5
-  maxSwingDistance: 15
+  grappleCooldown: 1
+  maxSwingDistance: 20
   swingDelayTime: 0.2
   minJointDistanceScale: 0.25
   maxJointDistanceScale: 0.6
   jointSpring: 8
   jointDamper: 4
   jointMassScale: 4.5
-  swingCooldown: 1
+  swingCooldown: 0.5
   grappleKey: 324
   swingKey: 323
   grappleColour: {r: 0.39215687, g: 0, b: 0, a: 1}
@@ -961,7 +961,7 @@ MonoBehaviour:
   orientation: {fileID: 1584755760412390282}
   playerObj: {fileID: 3153245809772258800}
   maxSlideTime: 1
-  slideForce: 200
+  slideForce: 350
   slideYScale: 0.5
   slideKey: 306
 --- !u!114 &1179476444491626436
