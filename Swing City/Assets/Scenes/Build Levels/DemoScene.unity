@@ -3759,10 +3759,6 @@ PrefabInstance:
       propertyPath: wallJumpUpForce
       value: 18
       objectReference: {fileID: 0}
-    - target: {fileID: 3348631534685463608, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
-      propertyPath: m_Mass
-      value: 2.5
-      objectReference: {fileID: 0}
     - target: {fileID: 4757837077297399718, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -113
@@ -3806,14 +3802,6 @@ PrefabInstance:
     - target: {fileID: 5772688829905072132, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8014506165160761107, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
-      propertyPath: jumpForce
-      value: 22
-      objectReference: {fileID: 0}
-    - target: {fileID: 8014506165160761107, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
-      propertyPath: airMultiplier
-      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6148,7 +6136,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 170730108}
+  m_Mesh: {fileID: 1780084600}
 --- !u!33 &1185499225
 MeshFilter:
   m_ObjectHideFlags: 10
