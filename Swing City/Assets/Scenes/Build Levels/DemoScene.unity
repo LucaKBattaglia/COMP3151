@@ -3755,10 +3755,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1179476444491626436, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
-      propertyPath: wallJumpUpForce
-      value: 18
-      objectReference: {fileID: 0}
     - target: {fileID: 4757837077297399718, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -113
