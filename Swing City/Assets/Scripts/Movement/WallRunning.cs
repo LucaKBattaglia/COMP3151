@@ -24,10 +24,12 @@ public class WallRunning : MonoBehaviour
     private float verticalInput;
 
     [Header("Detection")]
+    public Transform wall;
     public float wallCheckDistance;
     public float minJumpHeight;
     private RaycastHit leftWallhit;
     private RaycastHit rightWallhit;
+    private RaycastHit hit;
     private bool wallLeft;
     private bool wallRight;
 
@@ -68,6 +70,14 @@ public class WallRunning : MonoBehaviour
     {
         wallRight = Physics.Raycast(transform.position, orientation.right, out rightWallhit, wallCheckDistance, whatIsWall);
         wallLeft = Physics.Raycast(transform.position, -orientation.right, out leftWallhit, wallCheckDistance, whatIsWall);
+        if(wallRight || wallLeft) {
+            hit = wallRight ? rightWallhit : leftWallhit;
+            if(wall != null && hit.transform == wall) {
+                wallRight = false;
+                wallLeft = false;
+            }
+        }
+        
     }
 
     private bool AboveGround()
@@ -127,7 +137,6 @@ public class WallRunning : MonoBehaviour
 
     private void StartWallRun()
     {
-        print("I am called");
         pm.wallrunning = true;
 
         wallRunTimer = maxWallRunTime;
@@ -172,9 +181,10 @@ public class WallRunning : MonoBehaviour
     private void StopWallRun()
     {
         pm.wallrunning = false;
+        wall = hit.transform;
+        hit = default(RaycastHit);
 
         // reset camera effects
-        //cam.DoFov(80f);
         cam.DoTilt(0);
     }
 

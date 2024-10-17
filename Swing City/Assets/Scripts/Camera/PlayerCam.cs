@@ -14,33 +14,31 @@ public class PlayerCam : MonoBehaviour
 
     float xRotation, yRotation, zRotation;
 
+    public bool freeze = false;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
+        freeze = false;
     }
 
     private void Update()
     {
-        // get mouse input
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX * GameManager.instance.sensXRate;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY * GameManager.instance.sensYRate;
+        if(!freeze) {
+            // get mouse input
+            float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX * GameManager.instance.sensXRate;
+            float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY * GameManager.instance.sensYRate;
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            yRotation += mouseX;
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-        yRotation += mouseX;
-
-        // rotate cam and orientation
-        transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation);
-        player.Rotate(Vector3.up * mouseX);
-        transform.position = camPos.position;
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
-    }
-
-    public void DoFov(float endValue)
-    {
-        //GetComponent<Camera>().DOFieldOfView(endValue, 0.25f);
+            // rotate cam and orientation
+            transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation);
+            player.Rotate(Vector3.up * mouseX);
+            transform.position = camPos.position;
+            orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        }
     }
 
     public void DoTilt(float zTilt)

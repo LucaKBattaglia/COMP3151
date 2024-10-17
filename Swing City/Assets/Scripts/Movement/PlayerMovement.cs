@@ -71,7 +71,10 @@ public class PlayerMovement : MonoBehaviour
     }
     
 
+    public PlayerCam playerCam;
+    public Transform playerObj;
     public Transform orientation;
+    public Transform camPos;
 
     public GameObject curCheckpoint;
 
@@ -88,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
         walking,
         sprinting,
         wallrunning,
+        sliding,
         crouching,
         air
     }
@@ -98,10 +102,12 @@ public class PlayerMovement : MonoBehaviour
     public bool canMove = true;
 
     public fade fadeImg;
+    public WallRunning wallRunScript;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        wallRunScript = GetComponent<WallRunning>();
         rb.freezeRotation = true;
         gameObject.tag = "Player";
         transform.Find("playerObject").tag = "Player";
@@ -162,14 +168,15 @@ public class PlayerMovement : MonoBehaviour
         // start crouch
         if (Input.GetKeyDown(crouchKey))
         {
-            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+            
+            //camPos.transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
         }
 
         // stop crouch
         if (Input.GetKeyUp(crouchKey))
         {
-            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+            playerObj.transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
         }
 
         if(Input.GetKeyUp(KeyCode.W) && grounded) {
@@ -186,29 +193,36 @@ public class PlayerMovement : MonoBehaviour
             moveSpeed = wallrunSpeed;
         }
 
-        // Mode - Crouching
         if (Input.GetKey(crouchKey))
         {
-            state = MovementState.crouching;
-            moveSpeed = crouchSpeed;
+            playerObj.transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+            if(sliding) {
+                state = MovementState.sliding;
+
+            }
+            else {
+                state = MovementState.crouching;
+                moveSpeed = crouchSpeed;
+            }
         }
 
         else if (boosting) {
             moveSpeed = boostSpeed;
         }
 
-        // Mode - Sprinting
-        else if(grounded && Input.GetKey(sprintKey))
-        {
-            state = MovementState.sprinting;
-            moveSpeed = sprintSpeed;
-        }
-
         // Mode - Walking
         else if (grounded)
         {
-            state = MovementState.walking;
-            moveSpeed = walkSpeed;
+            wallRunScript.wall = null;
+
+            if(Input.GetKey(sprintKey)) {
+                state = MovementState.sprinting;
+                moveSpeed = sprintSpeed;
+            }
+            else {
+                state = MovementState.walking;
+                moveSpeed = walkSpeed;
+            }
         }
 
         else if (activeSwing)
