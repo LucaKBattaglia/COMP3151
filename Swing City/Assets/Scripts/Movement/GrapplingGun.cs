@@ -45,10 +45,16 @@ public class GrapplingGun : MonoBehaviour
     [Header("Colours")]
     [SerializeField] private Color grappleColour = Color.red;
     [SerializeField] private Color swingColour = Color.blue;
+
+    [Header("UI Crosshair")]
+    [SerializeField] private Color aimGrappleColour = Color.red;
+    [SerializeField] private Color aimSwingColour = Color.blue;
     
     private PlayerMovement player;
     private LineRenderer lr;
     private Vector3 currentGrapplePosition;
+    private RectTransform crosshair;
+    private Color crosshairColour;
     
     void Awake()
     {
@@ -64,6 +70,8 @@ public class GrapplingGun : MonoBehaviour
         grapplePanelColor = grapplePanel.material.GetColor("_EmissionColor");
         swingPanel = swingPanel.gameObject.GetComponent<Renderer>();
         swingPanelColor = swingPanel.material.GetColor("_EmissionColor");
+        crosshair = GameObject.Find("Canvas/Crosshair").GetComponent<RectTransform>();
+        crosshairColour = Color.white;
     }
 
     // Update is called once per frame
@@ -98,6 +106,14 @@ public class GrapplingGun : MonoBehaviour
         else
         {
             swingPanel.material.SetColor("_EmissionColor", swingPanelColor);
+        }
+
+        RaycastHit hit;
+        for (int i = 0; i < crosshair.transform.childCount; i++)
+        {
+            if (Physics.Raycast(cam.position, cam.forward, out hit, maxSwingDistance, canGrapple)) crosshair.GetChild(i).GetComponent<Image>().color = aimSwingColour;
+            else if (Physics.Raycast(cam.position, cam.forward, out hit, maxGrappleDistance, canGrapple)) crosshair.GetChild(i).GetComponent<Image>().color = aimGrappleColour;
+            else crosshair.GetChild(i).GetComponent<Image>().color = crosshairColour;
         }
     }
 
