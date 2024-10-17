@@ -75,7 +75,7 @@ public class MovingPlatform : MonoBehaviour
             Vector3 platformMovement = transform.position - lastPlatformPosition;
 
             // Directly position the player to avoid pushing them off
-            playerRb.MovePosition(playerRb.position + new Vector3(platformMovement.x, 0, platformMovement.z));
+            playerRb.MovePosition(playerRb.position + new Vector3(platformMovement.x, platformMovement.y, platformMovement.z));
         }
 
         lastPlatformPosition = transform.position; // Update last platform position for the next frame
