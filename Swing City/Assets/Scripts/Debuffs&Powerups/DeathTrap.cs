@@ -27,7 +27,6 @@ public class DeathTrap : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && enable) {
             player.rb.velocity = Vector3.zero;
             player.transform.position = respawnPoint.position;
-            player.controlSpd = true;
             //StartCoroutine(HandlePlayerDeath()); // Start the process of fading to black and respawning 
             //enable = false;
         }
@@ -41,7 +40,6 @@ public class DeathTrap : MonoBehaviour
         //anim.Play(fadeFrom);
         //yield return new WaitForSeconds(0.1f);
         player.transform.position = respawnPoint.position;
-        player.controlSpd = true;
         player.enabled = true;
         yield return new WaitForEndOfFrame();
         //anim.Play(fadeFrom);

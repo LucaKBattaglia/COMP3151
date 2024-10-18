@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool getKey1 = false;
     [SerializeField] private bool getKey2 = false;
     [SerializeField] private bool getKey3 = false;
+    [SerializeField] private bool limitFPS;
+    [SerializeField] private int FPS = 50;
 
     private GameData gameData;
     private FileDataHandler dataHandler;
@@ -56,6 +58,12 @@ public class GameManager : MonoBehaviour
         
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
         LoadGame();
+
+        if (limitFPS)
+        {
+            QualitySettings.vSyncCount = 0; // Set vSyncCount to 0 so that using .targetFrameRate is enabled.
+            Application.targetFrameRate = FPS;
+        }
     }
 
     // Method to collect any key by name

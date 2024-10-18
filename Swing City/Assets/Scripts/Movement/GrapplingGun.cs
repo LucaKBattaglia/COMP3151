@@ -130,7 +130,6 @@ public class GrapplingGun : MonoBehaviour
         if (grappleCooldownTimer > 0f || isSwinging) return;
 
         isGrappling = true;
-        player.isFrozen = true; // Freeze the player
         grappleCooldownTimer = grappleCooldown; // Reset cooldown and stick it there until grappling has stopped
 
         // Raycast to shoot grapple. If miss, set point at the maximum distance of ray
@@ -154,8 +153,6 @@ public class GrapplingGun : MonoBehaviour
 
     private void ExecuteGrapple()
     {
-        player.isFrozen = false; // unfreeze player
-
         Vector3 lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z); // set lowest point
 
         float grapplePointRelativeYPos = grapplePoint.y - lowestPoint.y; // get relative y position for grapple point
@@ -170,7 +167,6 @@ public class GrapplingGun : MonoBehaviour
 
     public void StopGrapple()
     {
-        player.isFrozen = false; // unfreeze player
         isGrappling = false;
         lr.enabled = false;
     }
