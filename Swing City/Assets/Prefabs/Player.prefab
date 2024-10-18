@@ -421,6 +421,7 @@ MonoBehaviour:
   player: {fileID: 3153245809772258800}
   orientation: {fileID: 1584755760412390282}
   camPos: {fileID: 4008136819870357609}
+  freeze: 0
 --- !u!114 &4356095500236036524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -940,7 +941,10 @@ MonoBehaviour:
   swingDecceleration: 4
   iceSpeedMultiplier: 1.75
   iceAccelMultiplier: 0.3
+  playerCam: {fileID: 0}
+  playerObj: {fileID: 3153245809772258800}
   orientation: {fileID: 1584755760412390282}
+  camPos: {fileID: 4008136819870357609}
   curCheckpoint: {fileID: 0}
   rb: {fileID: 0}
   state: 0
@@ -948,6 +952,7 @@ MonoBehaviour:
   crouching: 0
   wallrunning: 0
   fadeImg: {fileID: 0}
+  wallRunScript: {fileID: 0}
 --- !u!114 &7733762480554805686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -986,12 +991,13 @@ MonoBehaviour:
     m_Bits: 8
   wallRunForce: 200
   wallJumpUpForce: 6
-  wallJumpSideForce: 12
+  wallJumpSideForce: 14
   wallClimbSpeed: 1
   maxWallRunTime: 1
   jumpKey: 32
   upwardsRunKey: 304
   downwardsRunKey: 306
+  wall: {fileID: 0}
   wallCheckDistance: 0.7
   minJumpHeight: 2
   exitWallTime: 1
