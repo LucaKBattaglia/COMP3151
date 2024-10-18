@@ -52,6 +52,8 @@ MonoBehaviour:
   getKey1: 0
   getKey2: 0
   getKey3: 0
+  limitFPS: 0
+  FPS: 30
 --- !u!114 &7391614802689239712
 MonoBehaviour:
   m_ObjectHideFlags: 0

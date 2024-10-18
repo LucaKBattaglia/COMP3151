@@ -45,10 +45,16 @@ public class GrapplingGun : MonoBehaviour
     [Header("Colours")]
     [SerializeField] private Color grappleColour = Color.red;
     [SerializeField] private Color swingColour = Color.blue;
+
+    [Header("UI Crosshair")]
+    [SerializeField] private Color aimGrappleColour = Color.red;
+    [SerializeField] private Color aimSwingColour = Color.blue;
     
     private PlayerMovement player;
     private LineRenderer lr;
     private Vector3 currentGrapplePosition;
+    private RectTransform crosshair;
+    private Color crosshairColour;
     
     void Awake()
     {
@@ -64,6 +70,8 @@ public class GrapplingGun : MonoBehaviour
         grapplePanelColor = grapplePanel.material.GetColor("_EmissionColor");
         swingPanel = swingPanel.gameObject.GetComponent<Renderer>();
         swingPanelColor = swingPanel.material.GetColor("_EmissionColor");
+        crosshair = GameObject.Find("Canvas/Crosshair").GetComponent<RectTransform>();
+        crosshairColour = Color.white;
     }
 
     // Update is called once per frame
@@ -99,6 +107,14 @@ public class GrapplingGun : MonoBehaviour
         {
             swingPanel.material.SetColor("_EmissionColor", swingPanelColor);
         }
+
+        RaycastHit hit;
+        for (int i = 0; i < crosshair.transform.childCount; i++)
+        {
+            if (Physics.Raycast(cam.position, cam.forward, out hit, maxSwingDistance, canGrapple)) crosshair.GetChild(i).GetComponent<Image>().color = aimSwingColour;
+            else if (Physics.Raycast(cam.position, cam.forward, out hit, maxGrappleDistance, canGrapple)) crosshair.GetChild(i).GetComponent<Image>().color = aimGrappleColour;
+            else crosshair.GetChild(i).GetComponent<Image>().color = crosshairColour;
+        }
     }
 
     // Called after Update
@@ -114,7 +130,6 @@ public class GrapplingGun : MonoBehaviour
         if (grappleCooldownTimer > 0f || isSwinging) return;
 
         isGrappling = true;
-        player.isFrozen = true; // Freeze the player
         grappleCooldownTimer = grappleCooldown; // Reset cooldown and stick it there until grappling has stopped
 
         // Raycast to shoot grapple. If miss, set point at the maximum distance of ray
@@ -138,8 +153,6 @@ public class GrapplingGun : MonoBehaviour
 
     private void ExecuteGrapple()
     {
-        player.isFrozen = false; // unfreeze player
-
         Vector3 lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z); // set lowest point
 
         float grapplePointRelativeYPos = grapplePoint.y - lowestPoint.y; // get relative y position for grapple point
@@ -154,7 +167,6 @@ public class GrapplingGun : MonoBehaviour
 
     public void StopGrapple()
     {
-        player.isFrozen = false; // unfreeze player
         isGrappling = false;
         lr.enabled = false;
     }

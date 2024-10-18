@@ -7,28 +7,17 @@ using TMPro;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    public bool isFrozen;
+    private float calculateSpeed;
     private float moveSpeed;
-    // public float SwingMovement
-    // {
-    //     get
-    //     {
-    //         return moveSpeed;
-    //     }
-    //     set
-    //     {
-    //         
-    //     }
-    // }
     public float walkSpeed;
     public float sprintSpeed;
     private float boostSpeed;
     public float maxSpeed;
     public float wallrunSpeed;
+    public float acceleration;
     public float swingMultiplier;
     public bool activeGrapple;
     public bool activeSwing;
-    public bool controlSpd;
     public float groundDrag;
     public bool boosting;
 
@@ -62,6 +51,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Momentum")]
     public float swingDecceleration = 2f;
 
+    [Header("Icy Momentum")]
+    public float iceSpeedMultiplier = 1f;
+    public float iceAccelMultiplier = 1f;
     private bool onIce = false;
 
     // Method called by the ice surface script to set the onIce status
@@ -99,7 +91,6 @@ public class PlayerMovement : MonoBehaviour
     public bool sliding;
     public bool crouching;
     public bool wallrunning;
-    public bool canMove = true;
 
     public fade fadeImg;
     public WallRunning wallRunScript;
@@ -112,36 +103,32 @@ public class PlayerMovement : MonoBehaviour
         gameObject.tag = "Player";
         transform.Find("playerObject").tag = "Player";
 
-
         readyToJump = true;
 
         startYScale = transform.localScale.y;
         activeSwing = false;
-        controlSpd = true;
     }
 
     private void Update()
     {
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-        if(canMove){
-            GetInput(); 
-            SpeedControl();
-            StateHandler(); 
-        }
-        else {
-            return; // Prevent any movement if canMove is false
-        }
-        MovePlayer();
+        GetInput(); 
+        StateHandler(); 
 
         if (Input.GetKeyDown(KeyCode.R))
         {
             transform.position = curCheckpoint.transform.position;
-            controlSpd = true;
         }
+    }
+    
+    private void FixedUpdate()
+    {
+        SpeedControl();
+        MovePlayer();
    
         // handle drag
-        if (grounded) {
+        if (grounded && !onIce) {
             
             rb.drag = groundDrag;
         }
@@ -190,7 +177,7 @@ public class PlayerMovement : MonoBehaviour
         if (wallrunning)
         {
             state = MovementState.wallrunning;
-            moveSpeed = wallrunSpeed;
+            calculateSpeed = wallrunSpeed;
         }
 
         if (Input.GetKey(crouchKey))
@@ -198,16 +185,15 @@ public class PlayerMovement : MonoBehaviour
             playerObj.transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             if(sliding) {
                 state = MovementState.sliding;
-
             }
             else {
                 state = MovementState.crouching;
-                moveSpeed = crouchSpeed;
+                calculateSpeed = crouchSpeed;
             }
         }
 
         else if (boosting) {
-            moveSpeed = boostSpeed;
+            calculateSpeed = boostSpeed;
         }
 
         // Mode - Walking
@@ -217,17 +203,17 @@ public class PlayerMovement : MonoBehaviour
 
             if(Input.GetKey(sprintKey)) {
                 state = MovementState.sprinting;
-                moveSpeed = sprintSpeed;
+                calculateSpeed = sprintSpeed;
             }
             else {
                 state = MovementState.walking;
-                moveSpeed = walkSpeed;
+                calculateSpeed = walkSpeed;
             }
         }
 
         else if (activeSwing)
         {
-            moveSpeed = walkSpeed * swingMultiplier;
+            calculateSpeed = walkSpeed * swingMultiplier;
         }
 
         // Mode - Air
@@ -236,13 +222,16 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.air;
             if (moveSpeed > walkSpeed)
             {
-                moveSpeed -= Time.deltaTime * swingDecceleration;
+                calculateSpeed -= Time.deltaTime * swingDecceleration;
             }
             else
             {
-                moveSpeed = walkSpeed;
+                calculateSpeed = walkSpeed;
             }
         }
+
+        if (onIce) moveSpeed = calculateSpeed * iceSpeedMultiplier;
+        else moveSpeed = calculateSpeed;
     }
 
     private void MovePlayer()
@@ -253,7 +242,8 @@ public class PlayerMovement : MonoBehaviour
         // on slope
         if (OnSlope() && !exitingSlope)
         {
-            rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 2f, ForceMode.Force);
+            if (onIce) rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * acceleration * iceAccelMultiplier * 2f, ForceMode.Force);
+            else rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * acceleration * 2f, ForceMode.Force);
 
             if (rb.velocity.y > 0)
                 rb.AddForce(Vector3.down * moveSpeed, ForceMode.Force);
@@ -261,12 +251,13 @@ public class PlayerMovement : MonoBehaviour
 
         // on ground
         else if(grounded) {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 5f, ForceMode.Force);
+            if (onIce) rb.AddForce(moveDirection.normalized * moveSpeed * acceleration * iceAccelMultiplier, ForceMode.Force);
+            else rb.AddForce(moveDirection.normalized * moveSpeed * acceleration, ForceMode.Force);
         }
 
         // in air
         else if(!grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * airMultiplier, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * moveSpeed * acceleration * airMultiplier, ForceMode.Force);
 
         // turn gravity off while on slope
         rb.useGravity = !OnSlope();
@@ -288,23 +279,14 @@ private void SpeedControl()
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // Get only horizontal velocity
 
         // Limit velocity if the player is not on ice
-        if (flatVel.magnitude > moveSpeed && onIce==false)
+        if (flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z); // Preserve the y component for jumping
-        
-            if (onIce)
-            {
-                // Allow sliding without speed limits, but preserve the vertical velocity
-                rb.velocity = new Vector3(flatVel.x, rb.velocity.y, flatVel.z); // Keep the current y velocity for jumping
-            }
 
-            else {
-                StartCoroutine(ReduceSpeedGradually(flatVel));
-                limitedVel = flatVel.normalized * moveSpeed;
-                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
-            }
-
+            StartCoroutine(ReduceSpeedGradually(flatVel));
+            limitedVel = flatVel.normalized * moveSpeed;
+            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
 
         else {
@@ -392,11 +374,10 @@ private IEnumerator ReduceSpeedGradually(Vector3 initialFlatVel)
     }
 
     public IEnumerator boostTime() {
-        controlSpd = false;
         boosting = true;
         boostSpeed = maxSpeed;
         yield return null;
-        while(moveSpeed > walkSpeed) {
+        while(moveSpeed > sprintSpeed) {
             print(moveSpeed);
             boostSpeed-=2;
             yield return new WaitForSeconds(1);

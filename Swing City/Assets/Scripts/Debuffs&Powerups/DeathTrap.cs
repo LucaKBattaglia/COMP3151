@@ -40,7 +40,6 @@ public class DeathTrap : MonoBehaviour
         anim.Play(fadeTo);
         yield return new WaitForSeconds(0.5f);
         player.transform.position = respawnPoint.position;
-        player.controlSpd = true;
         player.enabled = true;
         cam.freeze = false;
         yield return new WaitForEndOfFrame();
