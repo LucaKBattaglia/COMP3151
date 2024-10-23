@@ -13,7 +13,8 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
-        tmp = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        if (transform.childCount > 0 && transform.GetChild(0).TryGetComponent(out TextMeshProUGUI textUGUI)) tmp = textUGUI;
+        else tmp = transform.GetComponent<TextMeshProUGUI>();
         curTime = 0f;
         getTime();
         tmp.text = "Time: " + curTime.ToString();
