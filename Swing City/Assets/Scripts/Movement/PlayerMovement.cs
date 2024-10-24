@@ -70,6 +70,8 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject curCheckpoint;
 
+    public GrapplingGun grappleGun;
+
     float horizontalInput;
     float verticalInput;
 
@@ -99,6 +101,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         wallRunScript = GetComponent<WallRunning>();
+        grappleGun = GameObject.Find("grappleGun").GetComponent<GrapplingGun>();
         rb.freezeRotation = true;
         gameObject.tag = "Player";
         transform.Find("playerObject").tag = "Player";
@@ -403,7 +406,7 @@ private IEnumerator ReduceSpeedGradually(Vector3 initialFlatVel)
         Invoke(nameof(SetVelocity), 0.1f);
 
         // restore player controls after set duration
-        Invoke(nameof(ResetRestrictions), GameObject.Find("grappleGun").GetComponent<GrapplingGun>().grappleDuration);
+        Invoke(nameof(ResetRestrictions), grappleGun.grappleDuration);
     }
 
     // set velocity to rigidbody
@@ -428,7 +431,7 @@ private IEnumerator ReduceSpeedGradually(Vector3 initialFlatVel)
             enableMovementOnNextTouch = false;
             ResetRestrictions();
 
-            GameObject.Find("grappleGun").GetComponent<GrapplingGun>().StopGrapple();
+            grappleGun.StopGrapple();
         }
     }
 
