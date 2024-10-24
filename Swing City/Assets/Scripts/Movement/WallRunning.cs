@@ -47,11 +47,15 @@ public class WallRunning : MonoBehaviour
     public PlayerCam cam;
     private PlayerMovement pm;
     private Rigidbody rb;
+    public WallRunCalc wallRunBar;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerMovement>();
+        wallRunBar = GameObject.Find("Wall Running Bar").GetComponent<WallRunCalc>();
+        wallRunBar.generateStam(maxWallRunTime);
+        wallRunBar.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -101,9 +105,12 @@ public class WallRunning : MonoBehaviour
                 StartWallRun();
 
             // wallrun timer
-            if (wallRunTimer > 0)
-                wallRunTimer -= Time.deltaTime;
-
+            if (wallRunTimer > 0) {
+                if(wallRunBar.gameObject.activeInHierarchy == false) wallRunBar.gameObject.SetActive(true);
+                float curTime = Time.deltaTime;
+                wallRunTimer -= curTime;
+                wallRunBar.modStam(curTime);
+            }
             if(wallRunTimer <= 0 && pm.wallrunning)
             {
                 exitingWall = true;
@@ -130,8 +137,9 @@ public class WallRunning : MonoBehaviour
         // State 3 - None
         else
         {
-            if (pm.wallrunning)
+            if (pm.wallrunning) {
                 StopWallRun();
+            }   
         }
     }
 
@@ -183,6 +191,8 @@ public class WallRunning : MonoBehaviour
         pm.wallrunning = false;
         wall = hit.transform;
         hit = default(RaycastHit);
+        wallRunBar.resetStam();
+        wallRunBar.gameObject.SetActive(false);
 
         // reset camera effects
         cam.DoTilt(0);
