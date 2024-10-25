@@ -92,7 +92,6 @@ GameObject:
   - component: {fileID: 7946665080375325505}
   - component: {fileID: 7309755985988683682}
   - component: {fileID: 328188201626697989}
-  - component: {fileID: 6283213897035997676}
   m_Layer: 0
   m_Name: grappleGun (1)
   m_TagString: Untagged
@@ -269,43 +268,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &6283213897035997676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1826574149562289189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f981da4bc0ada4f489c55c628e08637f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canGrapple:
-    serializedVersion: 2
-    m_Bits: 136
-  grappleTip: {fileID: 0}
-  cam: {fileID: 4950553035266971344}
-  grapplePanel: {fileID: 0}
-  swingPanel: {fileID: 0}
-  maxGrappleDistance: 25
-  grappleDuration: 1
-  grappleDelayTime: 0.2
-  overshootYAxis: 0
-  overshootXZScale: 3
-  grappleCooldown: 1
-  maxSwingDistance: 20
-  swingDelayTime: 0.2
-  minJointDistanceScale: 0.25
-  maxJointDistanceScale: 0.6
-  jointSpring: 8
-  jointDamper: 4
-  jointMassScale: 4.5
-  swingCooldown: 0.5
-  grappleKey: 324
-  swingKey: 323
-  grappleColour: {r: 0.39215687, g: 0, b: 0, a: 1}
-  swingColour: {r: 0, g: 0, b: 0.39215687, a: 1}
 --- !u!1 &1881368510826993212
 GameObject:
   m_ObjectHideFlags: 0
@@ -1140,11 +1102,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ef1927499a3ef94eaac10a174d6e17f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 10
-  sprintSpeed: 20
+  walkSpeed: 8
+  sprintSpeed: 16
   maxSpeed: 32
-  wallrunSpeed: 16
-  acceleration: 7
+  wallrunSpeed: 13
+  acceleration: 7.5
   swingMultiplier: 2.5
   activeGrapple: 0
   activeSwing: 0
@@ -1153,7 +1115,7 @@ MonoBehaviour:
   jumpForce: 9
   jumpCooldown: 0.25
   airMultiplier: 0.2
-  crouchSpeed: 8
+  crouchSpeed: 4
   crouchYScale: 0.5
   jumpKey: 32
   sprintKey: 304
@@ -1194,7 +1156,7 @@ MonoBehaviour:
   orientation: {fileID: 1584755760412390282}
   playerObj: {fileID: 3153245809772258800}
   maxSlideTime: 1
-  slideForce: 350
+  slideForce: 180
   slideYScale: 0.5
   slideKey: 306
 --- !u!114 &1179476444491626436
