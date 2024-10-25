@@ -62,7 +62,6 @@ public class PlayerMovement : MonoBehaviour
         onIce = isOnIce;
     }
     
-
     public PlayerCam playerCam;
     public Transform playerObj;
     public Transform orientation;
@@ -155,7 +154,6 @@ public class PlayerMovement : MonoBehaviour
         // start crouch
         if (Input.GetKeyDown(crouchKey))
         {
-            
             //camPos.transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
         }
@@ -180,6 +178,7 @@ public class PlayerMovement : MonoBehaviour
             calculateSpeed = wallrunSpeed;
         }
 
+        // Mode - Crouching
         if (Input.GetKey(crouchKey))
         {
             playerObj.transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
@@ -201,6 +200,7 @@ public class PlayerMovement : MonoBehaviour
         {
             wallRunScript.wall = null;
 
+            // Mode - Sprinting
             if(Input.GetKey(sprintKey)) {
                 state = MovementState.sprinting;
                 calculateSpeed = sprintSpeed;
