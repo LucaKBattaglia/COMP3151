@@ -18,6 +18,6 @@ public class fade : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        img.color = new Color(0,0,0,alpha);
+        //img.color = new Color(0,0,0,alpha);
     }
 }

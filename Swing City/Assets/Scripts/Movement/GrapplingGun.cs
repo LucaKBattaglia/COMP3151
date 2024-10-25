@@ -53,8 +53,8 @@ public class GrapplingGun : MonoBehaviour
     private PlayerMovement player;
     private LineRenderer lr;
     private Vector3 currentGrapplePosition;
-    private RectTransform crosshair;
-    private Color crosshairColour;
+    public RectTransform crosshair;
+    public Color crosshairColour;
     
     void Awake()
     {
@@ -114,6 +114,7 @@ public class GrapplingGun : MonoBehaviour
             if (Physics.Raycast(cam.position, cam.forward, out hit, maxSwingDistance, canGrapple)) crosshair.GetChild(i).GetComponent<Image>().color = aimSwingColour;
             else if (Physics.Raycast(cam.position, cam.forward, out hit, maxGrappleDistance, canGrapple)) crosshair.GetChild(i).GetComponent<Image>().color = aimGrappleColour;
             else crosshair.GetChild(i).GetComponent<Image>().color = crosshairColour;
+            print(crosshair.GetChild(i).GetComponent<Image>().color + " " + crosshairColour);
         }
     }
 
@@ -224,7 +225,7 @@ public class GrapplingGun : MonoBehaviour
         }
     }
 
-    private void StopSwing()
+    public void StopSwing()
     {
         isSwinging = false;
         lr.enabled = false;

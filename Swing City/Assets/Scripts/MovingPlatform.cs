@@ -6,6 +6,8 @@ public class MovingPlatform : MonoBehaviour
 {
     public bool loop; // Whether the platform goes back and forth between points or just respawns at the start point
     public float spd; // How fast the platform moves
+    public float waitTime; // time to wait after reaching points
+    public float waitTimer; // the timer used to count down the wait time
     public Vector3 moveDir; // The direction the platform is currently moving
     public Vector3 startP; // The starting position of the platform
     public Vector3 endP; // The ending position
@@ -18,17 +20,17 @@ public class MovingPlatform : MonoBehaviour
     private bool playerOnPlatform; // Whether the player is on the platform
     private Rigidbody playerRb; // Reference to the player's Rigidbody
 
-    void Start()
-    {
+    void Start() {
         int p = transform.GetSiblingIndex() + 1;
         Transform pObj = transform.parent.GetChild(p);
         points = new Transform[pObj.childCount];
         for (int i = 0; i < pObj.childCount; i++) points[i] = pObj.GetChild(i);
         init();
         lastPlatformPosition = transform.position; // Initialize last position
+        waitTimer = waitTime;
     }
-    void init()
-    {
+
+    void init() {
         startP = points[0].position; // StartP is the first child, so automatically grab that
         endP = points[points.Length - 1].position; // Ditto for endP but at the last position
         curInd = 1; // Current point to move to is the second child
@@ -38,34 +40,33 @@ public class MovingPlatform : MonoBehaviour
         moveDir = (curP - transform.position).normalized; // Set direction
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         // Move the platform towards the current point
-        if (Vector3.Distance(curP, transform.position) < 0.1f)
-        {
-            if (curP == endP || curP == startP)
-            {
-                if (loop)
-                {
-                    arrDir = !arrDir; // Flip the array direction
-                    moveArr(arrDir); // Increment arrDir (so that we're not on endP or startP)
-                    curP = points[curInd].position; // Get the next point to move to
+        if (Vector3.Distance(curP, transform.position) < 0.2f) {
+                if (curP == endP || curP == startP) {
+                    if(waitTimer <= 0) {
+                        if (loop) {
+                            arrDir = !arrDir; // Flip the array direction
+                            moveArr(arrDir); // Increment arrDir (so that we're not on endP or startP)
+                            curP = points[curInd].position; // Get the next point to move to
+                            moveDir = (curP - transform.position).normalized; // And get the direction
+                        }
+                        else {
+                            init(); // If not looping, just reset the platform
+                        }
+                        waitTimer = waitTime;
+                    }
+                    else {
+                        waitTimer -= Time.deltaTime;
+                    }
+                }
+                else {
+                    moveArr(arrDir); // Move to the next point
+                    curP = points[curInd].position; // Get that point
                     moveDir = (curP - transform.position).normalized; // And get the direction
                 }
-                else
-                {
-                    init(); // If not looping, just reset the platform
-                }
-            }
-            else
-            {
-                moveArr(arrDir); // Move to the next point
-                curP = points[curInd].position; // Get that point
-                moveDir = (curP - transform.position).normalized; // And get the direction
-            }
         }
-        else
-        {
+        else {
             transform.Translate(moveDir * Time.deltaTime * spd); // Move the platform
         }
 
