@@ -17,6 +17,7 @@ public class DeathTrap : MonoBehaviour
 
     void Start()
     {
+        if(BlackOut == null) BlackOut = GameObject.Find("BlackOut");
         anim = BlackOut.GetComponent<Animator>();
         clr = BlackOut.GetComponent<RawImage>().color;
         player = GameObject.Find("Player").GetComponent<PlayerMovement>();
