@@ -18,7 +18,7 @@ public class FinishLine : MonoBehaviour
                 GameManager.instance.SetRecordTime(SceneManager.GetActiveScene().name, GameObject.Find("Timer").GetComponent<Timer>().getTime());
                 GameManager.instance.LogToFile(SceneManager.GetActiveScene().name, GameObject.Find("Timer").GetComponent<Timer>().getTime());
             }
-            SceneManager.LoadScene("Hub");
+            SceneManager.LoadScene("Hub2.0");
             Debug.Log("U have got key 1");
         }
     }
