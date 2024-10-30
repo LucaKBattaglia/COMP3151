@@ -70,7 +70,7 @@ public class GrapplingGun : MonoBehaviour
         grapplePanelColor = grapplePanel.material.GetColor("_EmissionColor");
         swingPanel = swingPanel.gameObject.GetComponent<Renderer>();
         swingPanelColor = swingPanel.material.GetColor("_EmissionColor");
-        crosshair = GameObject.Find("Canvas/Crosshair").GetComponent<RectTransform>();
+        crosshair = GameObject.Find("UI Canvas/Crosshair").GetComponent<RectTransform>();
         crosshairColour = Color.white;
     }
 
@@ -114,7 +114,7 @@ public class GrapplingGun : MonoBehaviour
             if (Physics.Raycast(cam.position, cam.forward, out hit, maxSwingDistance, canGrapple)) crosshair.GetChild(i).GetComponent<Image>().color = aimSwingColour;
             else if (Physics.Raycast(cam.position, cam.forward, out hit, maxGrappleDistance, canGrapple)) crosshair.GetChild(i).GetComponent<Image>().color = aimGrappleColour;
             else crosshair.GetChild(i).GetComponent<Image>().color = crosshairColour;
-            print(crosshair.GetChild(i).GetComponent<Image>().color + " " + crosshairColour);
+            //print(crosshair.GetChild(i).GetComponent<Image>().color + " " + crosshairColour);
         }
     }
 
