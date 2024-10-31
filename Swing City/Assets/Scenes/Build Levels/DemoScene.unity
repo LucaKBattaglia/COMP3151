@@ -2878,7 +2878,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1757318719968258961, guid: 0e3d8a003f8c53c45bb4e8e959d16fc1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3635271946092913388, guid: 0e3d8a003f8c53c45bb4e8e959d16fc1, type: 3}
       propertyPath: m_Pivot.x
@@ -3922,8 +3922,8 @@ MonoBehaviour:
   respawnPoint: {fileID: 1044035370}
   BlackOut: {fileID: 0}
   player: {fileID: 629955241}
-  fadeFrom: fadeOut
-  fadeTo: fadeIn
+  fadeFrom: fadeFrom
+  fadeTo: fadeTo
 --- !u!64 &595569810
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5174,7 +5174,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 281.65, y: 0.83}
+  m_AnchoredPosition: {x: 277.65, y: 0.83}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &752232656
@@ -6750,8 +6750,8 @@ MonoBehaviour:
   respawnPoint: {fileID: 1314250708}
   BlackOut: {fileID: 1120003615}
   player: {fileID: 629955241}
-  fadeFrom: fadeOut
-  fadeTo: fadeIn
+  fadeFrom: fadeFrom
+  fadeTo: fadeTo
 --- !u!64 &1185499224
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -7786,8 +7786,8 @@ MonoBehaviour:
   respawnPoint: {fileID: 730484433}
   BlackOut: {fileID: 1120003615}
   player: {fileID: 629955241}
-  fadeFrom: fadeOut
-  fadeTo: fadeIn
+  fadeFrom: fadeFrom
+  fadeTo: fadeTo
 --- !u!43 &1302578365
 Mesh:
   m_ObjectHideFlags: 0
@@ -8688,7 +8688,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3372091761485978648, guid: 76d6dd1e978f56f4ab56502dde705172, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 249.78
+      value: 241.53
       objectReference: {fileID: 0}
     - target: {fileID: 3372091761485978648, guid: 76d6dd1e978f56f4ab56502dde705172, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11412,8 +11412,8 @@ MonoBehaviour:
   respawnPoint: {fileID: 1500294188}
   BlackOut: {fileID: 1120003615}
   player: {fileID: 629955241}
-  fadeFrom: fadeOut
-  fadeTo: fadeIn
+  fadeFrom: fadeFrom
+  fadeTo: fadeTo
 --- !u!64 &1863588759
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -27522,8 +27522,8 @@ MonoBehaviour:
   respawnPoint: {fileID: 1473561877}
   BlackOut: {fileID: 1120003615}
   player: {fileID: 629955241}
-  fadeFrom: fadeOut
-  fadeTo: fadeIn
+  fadeFrom: fadeFrom
+  fadeTo: fadeTo
 --- !u!64 &2138101249
 MeshCollider:
   m_ObjectHideFlags: 0

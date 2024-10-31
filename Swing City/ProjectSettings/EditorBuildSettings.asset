@@ -35,7 +35,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Old/PitchScene2.unity
     guid: 97fc260db311c194d9e3a6eecee70045
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Build Levels/PrototypeScene.unity
     guid: bfa35df53ecc940c59da548d9d305119
   - enabled: 1

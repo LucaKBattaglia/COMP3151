@@ -38,11 +38,15 @@ public class DeathTrap : MonoBehaviour
         player.rb.useGravity = false;
         player.grappleGun.StopSwing();
         player.grappleGun.StopGrapple();
+        player.gameObject.GetComponentInChildren<Collider>().enabled = false;
+        player.onPlatform = false; 
         player.enabled = false;
-        yield return new WaitForEndOfFrame();
 
+        yield return new WaitForEndOfFrame();
         anim.Play(fadeTo);
         yield return new WaitForSeconds(0.5f);
+        player.gameObject.GetComponentInChildren<Collider>().enabled = true;
+        player.rb.velocity = Vector3.zero;
         player.transform.position = respawnPoint.position;
         player.enabled = true;
         cam.freeze = false;

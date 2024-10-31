@@ -92,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
     public bool sliding;
     public bool crouching;
     public bool wallrunning;
+    public bool onPlatform;
 
     public fade fadeImg;
     public WallRunning wallRunScript;

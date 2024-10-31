@@ -2027,7 +2027,7 @@ PrefabInstance:
     - target: {fileID: 9197796712457830910, guid: bf1d77804a8269344967637e0a328e7b, type: 3}
       propertyPath: respawnPoint
       value: 
-      objectReference: {fileID: 1675251538}
+      objectReference: {fileID: 1869702482}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3505,7 +3505,7 @@ GameObject:
   - component: {fileID: 412780506}
   - component: {fileID: 412780505}
   - component: {fileID: 412780504}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Handlebar (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4211,7 +4211,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 445537977}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: MountedHandlebar (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8839,7 +8839,7 @@ GameObject:
   - component: {fileID: 659038833}
   - component: {fileID: 659038832}
   - component: {fileID: 659038831}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Handlebar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14740,7 +14740,7 @@ GameObject:
   - component: {fileID: 1201009931}
   - component: {fileID: 1201009930}
   - component: {fileID: 1201009929}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Handlebar (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16893,7 +16893,7 @@ PrefabInstance:
     - target: {fileID: 9197796712457830910, guid: bf1d77804a8269344967637e0a328e7b, type: 3}
       propertyPath: respawnPoint
       value: 
-      objectReference: {fileID: 1675251538}
+      objectReference: {fileID: 1869702482}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16918,7 +16918,7 @@ GameObject:
   - component: {fileID: 1378758151}
   - component: {fileID: 1378758150}
   - component: {fileID: 1378758149}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20027,6 +20027,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8014506165160761107, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
+      propertyPath: curCheckpoint
+      value: 
+      objectReference: {fileID: 1675251537}
     - target: {fileID: 8120278020110620816, guid: e3117fc374d1bfa428258288cb0bbc9a, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -20222,7 +20226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1554589621}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: MountedHandlebar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20260,7 +20264,7 @@ GameObject:
   - component: {fileID: 1555470397}
   - component: {fileID: 1555470396}
   - component: {fileID: 1555470395}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23662,7 +23666,7 @@ GameObject:
   - component: {fileID: 1838748306}
   - component: {fileID: 1838748305}
   - component: {fileID: 1838748304}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Handlebar (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24920,6 +24924,37 @@ Transform:
   - {fileID: 766435565}
   - {fileID: 555837480}
   - {fileID: 1327244117}
+  m_Father: {fileID: 2135028179}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1869702481
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1869702482}
+  m_Layer: 9
+  m_Name: Checkpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1869702482
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869702481}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 331.07, y: -3.958046, z: -11.887398}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 2135028179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1877523965
@@ -26279,7 +26314,7 @@ GameObject:
   - component: {fileID: 1963536360}
   - component: {fileID: 1963536359}
   - component: {fileID: 1963536358}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Handlebar (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26797,7 +26832,7 @@ GameObject:
   - component: {fileID: 1994255992}
   - component: {fileID: 1994255991}
   - component: {fileID: 1994255990}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28436,6 +28471,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1675251538}
+  - {fileID: 1869702482}
   - {fileID: 1861266548}
   - {fileID: 688337443}
   - {fileID: 1171690257}
@@ -28547,6 +28583,14 @@ PrefabInstance:
     - target: {fileID: 2965554505446442825, guid: ce74951e7cb3893449bd0b03919d60ab, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3180688823184498204, guid: ce74951e7cb3893449bd0b03919d60ab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.9697135
+      objectReference: {fileID: 0}
+    - target: {fileID: 3180688823184498204, guid: ce74951e7cb3893449bd0b03919d60ab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.04024917
       objectReference: {fileID: 0}
     - target: {fileID: 3200366063336487957, guid: ce74951e7cb3893449bd0b03919d60ab, type: 3}
       propertyPath: keyNumber
@@ -28759,7 +28803,7 @@ PrefabInstance:
     - target: {fileID: 9197796712457830910, guid: bf1d77804a8269344967637e0a328e7b, type: 3}
       propertyPath: respawnPoint
       value: 
-      objectReference: {fileID: 1675251538}
+      objectReference: {fileID: 1869702482}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

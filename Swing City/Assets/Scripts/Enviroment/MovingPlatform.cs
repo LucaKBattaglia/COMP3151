@@ -15,15 +15,17 @@ public class MovingPlatform : MonoBehaviour
     public Transform[] points; // In case we ever want to do complex moving platforms
     private bool arrDir; // The direction the point array is being looped through (true is ->, false is <-)
     private int curInd; // The current index corresponding to curP
-
+    private bool playerOnPlatform;
     private Vector3 lastPlatformPosition; // Store the platform's position in the last frame
-    private bool playerOnPlatform; // Whether the player is on the platform
     private Rigidbody playerRb; // Reference to the player's Rigidbody
+
+    private PlayerMovement player;
 
     void Start() {
         int p = transform.GetSiblingIndex() + 1;
         Transform pObj = transform.parent.GetChild(p);
         points = new Transform[pObj.childCount];
+        player = GameObject.Find("Player").GetComponent<PlayerMovement>();
         for (int i = 0; i < pObj.childCount; i++) points[i] = pObj.GetChild(i);
         init();
         lastPlatformPosition = transform.position; // Initialize last position
@@ -41,6 +43,9 @@ public class MovingPlatform : MonoBehaviour
     }
 
     void FixedUpdate() {
+        if(!player.onPlatform) {
+            playerOnPlatform = false;
+        }
         // Move the platform towards the current point
         if (Vector3.Distance(curP, transform.position) < 0.2f) {
                 if (curP == endP || curP == startP) {
@@ -92,6 +97,7 @@ public class MovingPlatform : MonoBehaviour
     {
         if (other.transform.CompareTag("Player"))
         {
+            player.onPlatform = true;
             playerOnPlatform = true;
             playerRb = other.transform.GetComponent<Rigidbody>(); // Store the player's Rigidbody reference
         }
@@ -102,6 +108,7 @@ public class MovingPlatform : MonoBehaviour
     {
         if (other.transform.CompareTag("Player"))
         {
+            player.onPlatform = false;
             playerOnPlatform = false;
             playerRb = null; // Reset player reference
         }
