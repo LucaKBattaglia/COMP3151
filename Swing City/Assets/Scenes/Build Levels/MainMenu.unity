@@ -2425,7 +2425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 309c6ec254de5f348b663d6471ceefbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: DemoScene
+  scene: Tutorial
 --- !u!1 &396768629
 GameObject:
   m_ObjectHideFlags: 0
@@ -7793,6 +7793,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6214518259914627167, guid: 2d241e1989ca144549e859822cdb2454, type: 3}
+      propertyPath: getKey3
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9439,7 +9443,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 85.5
+  m_fontSize: 85.6
   m_fontSizeBase: 65
   m_fontWeight: 400
   m_enableAutoSizing: 1

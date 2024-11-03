@@ -51,6 +51,7 @@ public class GrapplingGun : MonoBehaviour
     [SerializeField] private Color aimSwingColour = Color.blue;
     
     private PlayerMovement player;
+    public AudioSource src;
     private LineRenderer lr;
     private Vector3 currentGrapplePosition;
     public RectTransform crosshair;
@@ -71,6 +72,7 @@ public class GrapplingGun : MonoBehaviour
         swingPanel = swingPanel.gameObject.GetComponent<Renderer>();
         swingPanelColor = swingPanel.material.GetColor("_EmissionColor");
         crosshair = GameObject.Find("UI Canvas/Crosshair").GetComponent<RectTransform>();
+        src = GetComponent<AudioSource>();
         crosshairColour = Color.white;
     }
 
@@ -79,6 +81,7 @@ public class GrapplingGun : MonoBehaviour
     {
         if (Input.GetKeyDown(grappleKey))
         {
+            playSound();
             StartGrapple();
         }
         if (grappleCooldownTimer > 0f && !isGrappling)
@@ -92,6 +95,7 @@ public class GrapplingGun : MonoBehaviour
         }
         if (Input.GetKeyDown(swingKey))
         {
+            playSound();
             StartSwing();
         }
         if (Input.GetKeyUp(swingKey))
@@ -123,6 +127,10 @@ public class GrapplingGun : MonoBehaviour
     {
         if (isGrappling || isSwinging)
             DrawRope();
+    }
+
+    void playSound() {
+        src.Play();
     }
 
     private void StartGrapple()
